@@ -132,7 +132,29 @@ def control_structures():
 
 control_structures()
 
+DAY 5
+================
+### Day 5: Functions
+### Author: ABDULLAHI AHMED OSMAN
+### Date: 2025-01-05
+### Description: In this day, I will be learning about functions in Python.
+### Code: This is a simple Python script that demonstrates the use of functions.
 
+def greet(name: str) -> None:
+    """Prints a personalized greeting message"""
+    print(f"Hello, {name}!")
+
+def add(x: int, y: int) -> int:
+    """Returns the sum of two numbers"""
+    return x + y
+
+def main() -> None:
+    """Main function to test the greet and add functions"""
+    greet("Abdullahi")
+    print(add(5, 10))
+
+if __name__ == "__main__":
+    main()
  
 
 
