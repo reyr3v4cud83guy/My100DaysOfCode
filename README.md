@@ -430,3 +430,256 @@ def main():
 if __name__ == "__main__":
     main()
 
+DAY 10
+===============================
+### Author: ABDULLAHI AHMED OSMAN
+### Date: 2025-01-10
+### Description: This is the ninth day of the 100 Days of Code challenge.
+### The task is to create a program that can send an email using the provided details.
+### The program should ask for user input for the subject, message, sender's email address, recipient
+'s email address, and sender's email password.
+### The program should then send an email using the provided details.
+### The program should handle any exceptions that may occur during the email sending process.
+### The program should print a success message if the email is sent successfully.
+### The program should print an error message if an exception occurs during the email sending process.
+### The program should use the smtplib library to send the email.
+### The program should use the MIMEMultipart class to create a multipart message.
+### The program should use the MIMEText class to create a plain text message.
+### The program should use the starttls method to start a TLS connection with the SMTP server.
+### The program should use the login method to login to the sender's email account.
+### The program should use the sendmail method to send the email.
+### The program should use the quit method to close the SMTP connection.
+### The program should use the keyboard library to listen for keyboard events.
+### The program should use the on_key_press and on_key_release functions to handle keyboard events.
+### The program should use the join method to wait for the keyboard listener to stop.
+### The program should use the finally block to print a message when the program stops.
+### The program should use the if __name__ == "__main__": block to ensure the main
+function is called when the program is run directly.
+python
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+def send_email(subject, message, from_addr, to_addr, password):
+    """
+    Sends an email using the provided details.
+    
+    Args:
+        subject (str): The subject of the email.
+        message (str): The body of the email.
+        from_addr (str): The sender's email address.
+        to_addr (str): The recipient's email address.
+        password (str): The sender's email password.
+    """
+    msg = MIMEMultipart()
+    msg['From'] = from_addr
+    msg['To'] = to_addr
+    msg['Subject'] = subject
+    msg.attach(MIMEText(message, 'plain'))
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(from_addr, password)
+    text = msg.as_string()
+    server.sendmail(from_addr, to_addr, text)
+    server.quit()
+
+def main():
+    """
+    Asks for user input and sends an email using the provided details.
+    """
+    subject = input("Enter the subject of the email: ")
+    message = input("Enter the body of the email: ")
+    from_addr = input("Enter your email address: ")
+    to_addr = input("Enter the recipient's email address: ")
+    password = input("Enter your email password: ")
+    
+    try:
+        send_email(subject, message, from_addr, to_addr, password)
+        print("Email sent successfully!")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+if __name__ == "__main__":
+    main()
+
+DAY 11
+===============================
+### Author: ABDULLAHI AHMED OSMAN
+### Date: 2025-01-11
+### Description: This is the eleventh day of the 100 Days of Code challenge.
+### The task is to create a program that allows to track our expenses and income. The program should be able to add, remove, and display expenses and income.
+### The program should also be able to calculate the total income and total expenses
+python
+class ExpenseTracker:
+    def __init__(self):
+        self.expenses = {}
+        self.income = 0
+
+    def add_expense(self, name, amount):
+        if amount < 0:
+            print("Expense amount cannot be negative.")
+        else:
+            self.expenses[name] = amount
+
+    def remove_expense(self, name):
+        if name in self.expenses:
+            del self.expenses[name]
+        else:
+            print("Expense not found.")
+
+    def display_expenses(self):
+        if not self.expenses:
+            print("No expenses added.")
+        else:
+            for name, amount in self.expenses.items():
+                print(f"{name}: ${amount:.2f}")
+
+    def add_income(self, amount):
+        if amount < 0:
+            print("Income amount cannot be negative.")
+        else:
+            self.income += amount
+
+    def display_income(self):
+        print(f"Total income: ${self.income:.2f}")
+
+    def calculate_total_expenses(self):
+        return sum(self.expenses.values())
+
+    def display_balance(self):
+        total_expenses = self.calculate_total_expenses()
+        balance = self.income - total_expenses
+        print(f"Total expenses: ${total_expenses:.2f}")
+        print(f"Balance: ${balance:.2f}")
+
+def main():
+    tracker = ExpenseTracker()
+    while True:
+        print("\n1. Add expense")
+        print("2. Remove expense")
+        print("3. Display expenses")
+        print("4. Add income")
+        print("5. Display income")
+        print("6. Display balance")
+        print("7. Quit")
+        choice = input("Enter your choice: ")
+        if choice == "1":
+            tracker.add_expense(input("Enter expense name: "), float(input("Enter expense amount: ")))
+        elif choice == "2":
+            tracker.remove_expense(input("Enter expense name: "))
+        elif choice == "3":
+            tracker.display_expenses()
+        elif choice == "4":
+            tracker.add_income(float(input("Enter income amount: ")))
+        elif choice == "5":
+            tracker.display_income()
+        elif choice == "6":
+            tracker.display_balance()
+        elif choice == "7":
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
+
+
+DAY 12
+==============================
+### Author: ABDULLAHI AHMED OSMAN
+### Date: 2025-01-12
+### Description: This is the twelfth day of the 100 Days of Code challenge.
+### The task is to create a program that allows to track power usage in a house.
+### The program should be able to add, remove, and display power usage for each device.
+### The program should also be able to calculate the total power usage and display it.
+### The program should be able to calculate the cost of the power usage based on the cost per unit
+### and display it.
+### The program should be able to display the total cost of the power usage for each device.
+### The program should be able to display the total cost of the power usage for all devices.
+
+class PowerUsageTracker:
+    def __init__(self):
+        self.devices = {}
+        self.cost_per_unit = 0
+
+    def add_device(self, name, power_usage):
+        if power_usage < 0:
+            print("Power usage cannot be negative.")
+        else:
+            self.devices[name] = power_usage
+
+    def remove_device(self, name):
+        if name in self.devices:
+            del self.devices[name]
+        else:
+            print("Device not found.")
+
+    def display_devices(self):
+        if not self.devices:
+            print("No devices added.")
+        else:
+            for name, power_usage in self.devices.items():
+                print(f"{name}: {power_usage} units")
+
+    def calculate_total_power_usage(self):
+        return sum(self.devices.values())
+
+    def display_total_power_usage(self):
+        total_power_usage = self.calculate_total_power_usage()
+        print(f"Total power usage: {total_power_usage} units")
+
+    def set_cost_per_unit(self, cost):
+        if cost < 0:
+            print("Cost per unit cannot be negative.")
+        else:
+            self.cost_per_unit = cost
+
+    def calculate_total_cost(self):
+        total_power_usage = self.calculate_total_power_usage()
+        return total_power_usage * self.cost_per_unit
+
+    def display_total_cost(self):
+        total_cost = self.calculate_total_cost()
+        print(f"Total cost: ${total_cost:.2f}")
+
+    def display_device_cost(self):
+        if not self.devices:
+            print("No devices added.")
+        else:
+            for name, power_usage in self.devices.items():
+                device_cost = power_usage * self.cost_per_unit
+                print(f"{name}: ${device_cost:.2f}")
+
+def main():
+    tracker = PowerUsageTracker()
+    while True:
+        print("\n1. Add device")
+        print("2. Remove device")
+        print("3. Display devices")
+        print("4. Calculate total power usage")
+        print("5. Set cost per unit")
+        print("6. Calculate total cost")
+        print("7. Display device cost")
+        print("8. Quit")
+        choice = input("Enter your choice: ")
+        if choice == "1":
+            tracker.add_device(input("Enter device name: "), float(input("Enter power usage: ")))
+        elif choice == "2":
+            tracker.remove_device(input("Enter device name: "))
+        elif choice == "3":
+            tracker.display_devices()
+        elif choice == "4":
+            tracker.display_total_power_usage()
+        elif choice == "5":
+            tracker.set_cost_per_unit(float(input("Enter cost per unit: ")))
+        elif choice == "6":
+            tracker.display_total_cost()
+        elif choice == "7":
+            tracker.display_device_cost()
+        elif choice == "8":
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
