@@ -1,0 +1,11 @@
+portfolio-project/
+├── public/
+│   ├── index.html
+│   ├── styles/
+│   │   └── styles.css
+│   └── scripts/
+│       └── scripts.js
+├── server/
+│   └── server.js
+├── package.json
+└── README.md
