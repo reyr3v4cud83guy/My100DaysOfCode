@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Abdullahi Osman</title>
+    <meta name="description" content="Portfolio of Abdullahi Osman, a passionate software developer with experience in various technologies.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <h1 class="logo">Abdullahi Osman</h1>
+            <nav>
+                <ul>
+                    <li><a href="#about" aria-label="About Section">About</a></li>
+                    <li><a href="#projects" aria-label="Projects Section">Projects</a></li>
+                    <li><a href="#contact" aria-label="Contact Section">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <p>Hello! I am Abdullahi Osman, a passionate software developer with experience in various technologies. Here's a glimpse of my work.</p>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2>Projects</h2>
+            <div class="project-card">
+                <h3>Simulator Game</h3>
+                <p>A Python-based simulator game that provides an engaging and interactive experience.</p>
+            </div>
+            <div class="project-card">
+                <h3>Banking System</h3>
+                <p>A robust Python-based banking system that handles transactions, accounts, and more.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contact</h2>
+            <p>If you would like to get in touch, please feel free to reach out via email or connect with me on LinkedIn.</p>
+            <form id="contact-form">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+                
+                <button type="submit">Send</button>
+            </form>
+            <p id="form-message"></p>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Abdullahi Osman. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
