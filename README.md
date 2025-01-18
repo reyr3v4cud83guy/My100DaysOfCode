@@ -931,7 +931,7 @@ class BankAccount:
         print(f"Account Type: {self.account_type}")
 
 def main():
-    account = BankAccount("1234567890", "John Doe", "johndoe@example.com", "123-456-7890", "123 Main St", "1990-01-01", 33, "Male", "Software Engineer", "Married", "American", "1234567890", "Driver's License", "2020-01-01", "2025-01-01", "DMV", "USA", "California", "Los Angeles", "12345", "123 Main St", "West Coast")
+    account = BankAccount("1234567890", "John Doe", "abdi@example.com", "123-456-7890", "123 Main St", "1990-01-01", 33, "Male", "Software Engineer", "Married", "American", "1234567890", "Driver's License", "2020-01-01", "2025-01-01", "DMV", "USA", "California", "Los Angeles", "12345", "123 Main St", "West Coast")
     while True:
         print("\n1. Deposit")
         print("2. Withdraw")
