@@ -1289,3 +1289,53 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+DAY 20
+=========================
+### Author: ABDULLAHI AHMED OSMAN
+### Date: 2025-01-18
+### Description: This is the 20th day of the 100 Days of Code challenge. 
+### The task is to create a program that can compile and run Python code from a file.
+### The program should be able to handle errors and exceptions that may occur during compilation and execution.
+### The program should also be be able to handle different types of files, such as .py,
+### .txt, .csv, etc.
+### The program should be able to handle different types of errors, such as syntax errors,
+### runtime errors, etc.
+### The program should be able to handle different types of exceptions, such as FileNotFoundError,
+### PermissionError, etc.
+### The program should be able to handle different types of file formats, such as .py, .
+### txt, .csv, etc.
+### The program should be able to handle different types of errors, such as syntax errors,
+### runtime error
+
+import subprocess
+
+def compile_and_run(file_path):
+    try:
+        # Compile the Python code
+        compile_command = f"python -m py_compile {file_path}"
+        subprocess.check_call(compile_command, shell=True)
+        
+        # Run the compiled Python code
+        run_command = f"python {file_path}"
+        subprocess.check_call(run_command, shell=True)
+        
+    except subprocess.CalledProcessError as e:
+        print(f"An error occurred: {e}")
+        
+    except FileNotFoundError:
+        print("File not found. Please check the file path.")
+        
+    except PermissionError:
+        print("Permission denied. Please check the file permissions.")
+        
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+def main():
+    file_path = input("Enter the file path: ")
+    compile_and_run(file_path)
+
+if __name__ == "__main__":
+    main()
