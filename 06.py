@@ -1,11 +1,10 @@
-import math
+iimport math
 import random
 import datetime
 import time
 import os
 import sys
 import platform
-import requests 
 import json
 import pandas as pd
 import numpy as np
@@ -13,6 +12,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 import plotly.graph_objects as go
+import requests
 
 def modules_example():
     """Demonstrates the use of various Python modules"""
@@ -30,9 +30,14 @@ def modules_example():
     print("Current system platform:", sys.platform)
     print("Platform Module:")
     print("Current platform:", platform.platform())
-    print("Requests Module:")
-    response = requests.get("https://www.example.com")
-    print("Status code:", response.status_code)
+    try:
+        print("Requests Module:")
+        response = requests.get("https://www.example.com")
+        print("Status code:", response.status_code)
+        print("Response headers:", response.headers)
+        print("Response content:", response.text)
+    except requests.exceptions.RequestException as e:
+        print("Error:", e)
     print("JSON Module:")
     data = json.loads('{"name": "John", "age": 30}')
     print("Name:", data["name"])
@@ -45,13 +50,21 @@ def modules_example():
     print("Array:", array)
     print("Matplotlib Module:")
     plt.plot([1, 2, 3, 4, 5])
+    plt.title("Line Plot")
+    plt.xlabel("X-axis")
+    plt.ylabel("Y-axis")
     plt.show()
     print("Seaborn Module:")
     sns.set()
     plt.plot([1, 2, 3, 4, 5])
+    plt.title("Line Plot")
+    plt.xlabel("X-axis")
+    plt.ylabel("Y-axis")
     plt.show()
     print("Plotly Module:")
     fig = go.Figure(data=[go.Scatter(x=[1, 2, 3, 4, 5], y=[1, 2, 3, 4, 5])])
+    fig.update_layout(title="Line Plot", xaxis_title="X-axis", yaxis_title="Y-axis")
     fig.show()
 
-modules_example()
+if __name__ == "__main__":
+    modules_example()
