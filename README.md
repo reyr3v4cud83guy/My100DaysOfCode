@@ -1300,7 +1300,7 @@ if __name__ == "__main__":
 DAY 19
 ========================
 ### Author: ABDULLAHI AHMED OSMAN
-### Date: 2025-01-18
+### Date: 2025-01-19
 ### Description: This is the  19th day of the 100 Days of Code challenge. 
 ### The task is to create a program that displays the amount of product sold by a store. The program should be able to add products, display the total amount of products in one year
 ### and calculate the average amount of products sold per day.
@@ -1451,7 +1451,7 @@ if __name__ == "__main__":
 DAY 20
 =========================
 ### Author: ABDULLAHI AHMED OSMAN
-### Date: 2025-01-18
+### Date: 2025-01-20
 ### Description: This is the 20th day of the 100 Days of Code challenge. 
 ### The task is to create a program that can compile and run Python code from a file.
 ### The program should be able to handle errors and exceptions that may occur during compilation and execution.
@@ -1496,11 +1496,72 @@ def main():
 
 if __name__ == "__main__":
     main()
-=======
+ my_branch
+
+
+DAY 21
+=========================
+### Author: ABDULLAHI AHMED OSMAN
+### Date: 2025-01-21
+### Description: This is the 21th day of the 100 Days of Code challenge. 
+### The task is to create a program a quiz that will ask user to answer a series of questions.
+### The program should be able to handle different types of questions, such as multiple choice, true or
+### false, short answer, etc.
+### The program should be able to keep track of the user's score and display it at the
+### end of the quiz.
+
+import random
+
+class Question:
+    def __init__(self, question, options, answer):
+        self.question = question
+        self.options = options
+        self.answer = answer
+
+    def ask(self):
+        print(self.question)
+        for i, option in enumerate(self.options):
+            print(f"{i+1}. {option}")
+        user_answer = input("Enter your answer: ")
+        if user_answer == self.answer:
+            return True
+        else:
+            return False
+
+class Quiz:
+    def __init__(self):
+        self.questions = []
+        self.score = 0
+
+    def add_question(self, question):
+        self.questions.append(question)
+
+    def run(self):
+        for question in self.questions:
+            if question.ask():
+                self.score += 1
+                print("Correct!\n")
+            else:
+                print(f"Sorry, the correct answer is {question.answer}.\n")
+        print(f"Quiz finished! Your final score is {self.score}/{len(self.questions)}")
+
+def main():
+    quiz = Quiz()
+    quiz.add_question(Question("What is the capital of France?", ["Paris", "London", "Berlin", "Rome"], "1"))
+    quiz.add_question(Question("What is the largest planet in our solar system?", ["Earth", "Saturn", "Jupiter", "Uranus"], "3"))
+    quiz.add_question(Question("Who painted the Mona Lisa?", ["Leonardo da Vinci", "Michelangelo", "Raphael", "Caravaggio"], "1"))
+    quiz.run()
+
+if __name__ == "__main__":
+    main()
+ 
+ 
+ 
  my_branch
     main()
-=======
+ 
     main()
 
+  Osman--branch
   Osman--branch
   Osman--branch
