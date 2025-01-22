@@ -1,4 +1,4 @@
-iimport math
+import math
 import random
 import datetime
 import time
@@ -49,22 +49,29 @@ def modules_example():
     array = np.array([1, 2, 3, 4, 5])
     print("Array:", array)
     print("Matplotlib Module:")
+    plt.figure(figsize=(10, 6))
     plt.plot([1, 2, 3, 4, 5])
     plt.title("Line Plot")
     plt.xlabel("X-axis")
     plt.ylabel("Y-axis")
+    plt.grid(True)
     plt.show()
     print("Seaborn Module:")
     sns.set()
+    plt.figure(figsize=(10, 6))
     plt.plot([1, 2, 3, 4, 5])
     plt.title("Line Plot")
     plt.xlabel("X-axis")
     plt.ylabel("Y-axis")
+    plt.grid(True)
     plt.show()
     print("Plotly Module:")
     fig = go.Figure(data=[go.Scatter(x=[1, 2, 3, 4, 5], y=[1, 2, 3, 4, 5])])
     fig.update_layout(title="Line Plot", xaxis_title="X-axis", yaxis_title="Y-axis")
     fig.show()
 
-if __name__ == "__main__":
+def main():
     modules_example()
+
+if __name__ == "__main__":
+    main()
