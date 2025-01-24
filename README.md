@@ -1481,3 +1481,221 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+DAY 23 
+=================================
+### Author: ABDULLAHI AHMED OSMAN
+### Date: 2025-01-23
+### Description: This is the 23RD day of the 100 Days of Code challenge. 
+### The task is to create a password manager and generators passwords
+### The password manager will have the following features:
+### 1. Add a new password
+### 2. Delete a passwordclass PasswordManager 
+### 3. Display all passwords
+### 4. Generate a password
+### 5. Quit
+### The password manager will store passwords in a dictionary where the key is the website and the value is
+### the password.
+### The password generator will generate a password of a specified length and complexity.
+### The complexity will be specified by the user and will be one of the following: low, medium , high.
+### The password generator will use a combination of uppercase and lowercase letters, numbers, and special characters.
+### The password generator will also use a combination of the following special characters: !, @, #
+### The password generator will also use a combination of the following special characters: $, %, ^,
+### The password generator will also use a combination of the following special characters: &, *, ( , ), 
+### The password generator will also use a combination of the following special characters: _, -, +, =
+### The password generator will also use a combination of the following special characters: {, }, [, ],
+### The password generator will also use a combination of the following special characters: |, :, ;,
+### The password generator will also use a combination of the following special characters: <, >, ?,
+### The password generator will also use a combination of the following special characters: ~, ` ,
+### The password generator will also use a combination of the following special characters: \, /, ,
+### The password generator will also use a combination of the following special characters: _, ~, ` ,
+
+import random
+import string
+
+class PasswordManager:
+    def __init__(self):
+        self.passwords = {}
+
+    def add_password(self, website, password):
+        self.passwords[website] = password
+        print(f"Password for {website} added successfully.")
+
+    def delete_password(self, website):
+        if website in self.passwords:
+            del self.passwords[website]
+            print(f"Password for {website} deleted successfully.")
+        else:
+            print("Password not found.")
+
+    def display_passwords(self):
+        if not self.passwords:
+            print("No passwords stored.")
+        else:
+            for website, password in self.passwords.items():
+                print(f"Website: {website}, Password: {password}")
+
+    def generate_password(self, length, complexity):
+        if complexity == "low":
+            characters = string.ascii_lowercase
+        elif complexity == "medium":
+            characters = string.ascii_letters + string.digits
+        elif complexity == "high":
+            characters = string.ascii_letters + string.digits + string.punctuation
+        else:
+            print("Invalid complexity level.")
+            return
+
+        password = "".join(random.choice(characters) for _ in range(length))
+        return password
+
+def main():
+    password_manager = PasswordManager()
+    while True:
+        print("\n1. Add password")
+        print("2. Delete password")
+        print("3. Display passwords")
+        print("4. Generate password")
+        print("5. Quit")
+        choice = input("Enter your choice: ")
+        if choice == "1":
+            website = input("Enter website: ")
+            password = input("Enter password: ")
+            password_manager.add_password(website, password)
+        elif choice == "2":
+            website = input("Enter website: ")
+            password_manager.delete_password(website)
+        elif choice == "3":
+            password_manager.display_passwords()
+        elif choice == "4":
+            length = int(input("Enter password length: "))
+            complexity = input("Enter password complexity (low, medium, high): ")
+            password = password_manager.generate_password(length, complexity)
+            print(f"Generated password: {password}")
+        elif choice == "5":
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
+
+
+DAY 24
+============================
+### Author: ABDULLAHI AHMED OSMAN
+### Date: 2025-01-24
+### Description: This is the 24th day of the 100 Days of Code challenge. 
+### The task is to create a call of duty game using python.
+### The game will have the following features:
+### 1. Player can move left, right, up, and down
+### 2. Player can shoot bullets
+### 3. Player can collect power-ups
+### 4. Player can fight enemies
+### 5. Player can level up
+### 6. Player can win the game
+
+import pygame
+import sys
+import random
+
+# Initialize Pygame
+pygame.init()
+
+# Set up some constants
+WIDTH, HEIGHT = 800, 600
+PLAYER_SIZE = 50
+PLAYER_SPEED = 5
+BULLET_SIZE = 10
+BULLET_SPEED = 10
+POWER_UP_SIZE = 20
+ENEMY_SIZE = 50
+ENEMY_SPEED = 5
+
+# Set up some colors
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+
+# Set up the display
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
+# Set up the player
+player = pygame.Rect(WIDTH / 2, HEIGHT / 2, PLAYER_SIZE, PLAYER_SIZE)
+
+# Set up the bullets
+bullets = []
+
+# Set up the power-ups
+power_ups = []
+
+# Set up the enemies
+enemies = []
+
+# Set up the clock
+clock = pygame.time.Clock()
+
+# Set up the score
+score = 0
+
+# Set up the font
+font = pygame.font.Font(None, 36)
+
+# Game loop
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                bullets.append(pygame.Rect(player.centerx, player.top, BULLET_SIZE, BULLET_SIZE))
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        player.x -= PLAYER_SPEED
+    if keys[pygame.K_RIGHT]:
+        player.x += PLAYER_SPEED
+    if keys[pygame.K_UP]:
+        player.y -= PLAYER_SPEED
+    if keys[pygame.K_DOWN]:
+        player.y += PLAYER_SPEED
+
+    # Move the bullets
+    for bullet in bullets:
+        bullet.y -= BULLET_SPEED
+        if bullet.bottom < 0:
+            bullets.remove(bullet)
+
+    # Move the enemies
+    for enemy in enemies:
+        enemy.y += ENEMY_SPEED
+        if enemy.top > HEIGHT:
+            enemies.remove(enemy)
+
+    # Check for collisions
+    for bullet in bullets:
+        for enemy in enemies:
+            if bullet.colliderect(enemy):
+                bullets.remove(bullet)
+                enemies.remove(enemy)
+                score += 1
+
+    # Add new enemies
+    if random.random() < 0.05:
+        enemies.append(pygame.Rect(random.randint(0, WIDTH - ENEMY_SIZE), 0, ENEMY_SIZE, ENEMY_SIZE))
+
+    # Draw everything
+    screen.fill(WHITE)
+    pygame.draw.rect(screen, RED, player)
+    for bullet in bullets:
+        pygame.draw.rect(screen, GREEN, bullet)
+    for enemy in enemies:
+        pygame.draw.rect(screen, BLUE, enemy)
+    text = font.render(f"Score: {score}", True, (0, 0, 0))
+    screen.blit(text, (10, 10))
+    pygame.display.flip()
+
+    # Cap the frame rate
+    clock.tick(60)
