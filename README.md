@@ -1859,6 +1859,77 @@ while True:
 
     # Cap the frame rate
     clock.tick(60)
+  my_branch
+
+DAY 25
+============================
+### Author: ABDULLAHI AHMED OSMAN
+### Date: 2025-01-25
+### Description: This is the 25th day of the 100 Days of Code challenge. 
+### The task is to create a simple game where the player controls a red square and must avoid blue squares that are falling from the top
+### of the screen. The player must also shoot green squares at the blue squares to destroy them.
+python
+import pygame
+import random
+import sys
+# Initialize Pygame
+pygame.init()
+# Set up some constants
+WIDTH, HEIGHT = 800, 600
+ENEMY_SIZE = 20
+ENEMY_SPEED = 2
+# Set up the display
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+# Set up the font
+font = pygame.font.Font(None, 36)
+
+DAY 25
+=========================
+### Author: ABDULLAHI AHMED OSMAN
+### Date: 2025-01-25
+### Description: This is the 25th day of the 100 Days of Code challenge. 
+### The task is to create a online money transfer system using Python and Flask.
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# Sample in-memory data store
+users = {
+    "1": {"name": "John Doe", "balance": 1000.0},
+    "2": {"name": "Jane Doe", "balance": 500.0}
+}
+
+@app.route("/transfer", methods=["POST"])
+def transfer():
+    data = request.json
+    sender_id = data["sender_id"]
+    receiver_id = data["receiver_id"]
+    amount = data["amount"]
+
+    if sender_id not in users or receiver_id not in users:
+        return jsonify({"error": "Invalid user ID"}), 400
+
+    sender_balance = users[sender_id]["balance"]
+    if amount > sender_balance:
+        return jsonify({"error": "Insufficient balance"}), 400
+
+    users[sender_id]["balance"] -= amount
+    users[receiver_id]["balance"] += amount
+
+    return jsonify({"message": "Transfer successful"}), 200
+
+@app.route("/balance", methods=["GET"])
+def balance():
+    user_id = request.args.get("user_id")
+    if user_id not in users:
+        return jsonify({"error": "Invalid user ID"}), 400
+
+    return jsonify({"balance": users[user_id]["balance"]}), 200
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+ 
  
  
  
@@ -1872,3 +1943,4 @@ while True:
   Osman--branch
   Osman--branch
   Osman--branch
+ > Osman--branch
