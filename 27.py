@@ -1,13 +1,13 @@
-import pandas as pd # type: ignore
-from sklearn.model_selection import train_test_split # type: ignore
-from sklearn.linear_model import LinearRegression # type: ignore
-from sklearn import metrics # type: ignore
-from sklearn.model_selection import cross_val_score # type: ignore
-from sklearn.model_selection import GridSearchCV # type: ignore
-from sklearn.model_selection import RandomizedSearchCV # type: ignore
-from sklearn.ensemble import RandomForestRegressor # type: ignore
+import pandas as pd 
+from sklearn.model_selection import train_test_split 
+from sklearn.linear_model import LinearRegression 
+from sklearn import metrics 
+from sklearn.model_selection import cross_val_score 
+from sklearn.model_selection import GridSearchCV 
+from sklearn.model_selection import RandomizedSearchCV 
+from sklearn.ensemble import RandomForestRegressor 
 import pickle
-import numpy as np # type: ignore
+import numpy as np 
 
 def load_dataset(file_path):
     try:
