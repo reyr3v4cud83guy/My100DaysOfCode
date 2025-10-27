@@ -53,7 +53,7 @@ while True:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                bullets.append(pygame.Rect(player.centerx, player.top, BULLET_SIZE, BULLET_SIZE))
+                bullets.append(pygame.Rect(player.center, player.top, BULLET_SIZE, BULLET_SIZE))
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
