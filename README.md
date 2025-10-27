@@ -9,13 +9,17 @@
 
 **🚀 A comprehensive collection of Python projects showcasing real-world applications**
 
+### 🌐 [**View Live Portfolio Website**](https://reyr3v4cud83guy.github.io/My100DaysOfCode/) 🌐
+
 </div>
 
 ---
 
 ## 👨‍💻 About This Journey
 
-**ABDULLAHI OSMAN** - Software Engineer on a mission to master Python through hands-on projects. This repository represents my 100 days of code challenge, featuring practical applications that solve real-world problems.
+**ABDULLAHI .A.OSMAN** - Software Engineer on a mission to master Python through hands-on projects. This repository represents my 100 days of code challenge, featuring practical applications that solve real-world problems.
+
+> 🌟 **[Visit the interactive portfolio website](https://reyr3v4cud83guy.github.io/My100DaysOfCode/)** to see live demos and project showcases!
 
 ## 🎯 What You'll Find Here
 
@@ -139,6 +143,7 @@ python expense_tracker.py
 
 <div align="center">
 
+[![Portfolio Website](https://img.shields.io/badge/Portfolio-FF5722?style=for-the-badge&logo=google-chrome&logoColor=white)](https://reyr3v4cud83guy.github.io/My100DaysOfCode/)
 [![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:Osman6176@gmail.com)
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/reyr3v4cud83guy)
 
