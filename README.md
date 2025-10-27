@@ -4,7 +4,7 @@ Welcome to my comprehensive Python learning repository! This collection represen
 
 ## 👨‍💻 About Me
 
-**ABDULLAHI ABDULLAHI** - Software Engineer passionate about continuous learning and coding excellence. This repository documents my 100 days of code challenge, where I explore different aspects of Python programming through hands-on projects.
+**ABDULLAHI OSMAN** - Software Engineer passionate about continuous learning and coding excellence. This repository documents my 100 days of code challenge, where I explore different aspects of Python programming through hands-on projects.
 
 ## 🚀 Project Overview
 
