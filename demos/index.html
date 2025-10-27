@@ -138,12 +138,54 @@
         }
         
         @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                max-width: 100%;
+            }
+            
+            .header {
+                margin-bottom: 2rem;
+            }
+            
             .header h1 {
                 font-size: 2rem;
             }
             
+            .header p {
+                font-size: 1rem;
+            }
+            
             .categories {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .category-card {
+                padding: 1.5rem;
+            }
+            
+            .category-icon {
+                font-size: 3rem;
+            }
+            
+            .demo-link {
+                font-size: 1rem;
+                padding: 0.5rem 0;
+                display: block;
+                touch-action: manipulation;
+            }
+            
+            .back-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .footer {
+                margin-top: 2rem;
+                font-size: 0.9rem;
             }
         }
     </style>

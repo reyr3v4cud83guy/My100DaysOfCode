@@ -134,6 +134,55 @@
             color: #333;
             font-weight: bold;
         }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 1.5rem 1rem;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .calculator {
+                padding: 1rem;
+            }
+            
+            .buttons {
+                gap: 8px;
+            }
+            
+            .btn {
+                padding: 1.2rem;
+                font-size: 1.2rem;
+                touch-action: manipulation;
+                min-height: 60px;
+            }
+            
+            .display {
+                padding: 1.2rem;
+                font-size: 1.4rem;
+                min-height: 80px;
+            }
+            
+            .history {
+                max-height: 150px;
+                padding: 0.75rem;
+            }
+            
+            .back-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>

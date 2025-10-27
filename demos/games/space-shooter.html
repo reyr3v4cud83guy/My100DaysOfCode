@@ -102,6 +102,89 @@
             font-weight: bold;
             margin-top: 1rem;
         }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .game-container {
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            #gameCanvas {
+                width: 100%;
+                height: 60vh;
+                max-width: 100vw;
+                border: 1px solid #333;
+            }
+            
+            .controls {
+                position: fixed;
+                bottom: 10px;
+                left: 10px;
+                right: 10px;
+                background: rgba(0,0,0,0.9);
+                padding: 0.75rem;
+                border-radius: 8px;
+                font-size: 0.9rem;
+            }
+            
+            .game-ui {
+                top: 10px;
+                left: 10px;
+            }
+            
+            .score {
+                font-size: 1.2rem;
+            }
+            
+            .back-btn {
+                top: 10px;
+                right: 10px;
+                left: auto;
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .game-over {
+                padding: 1.5rem;
+                margin: 0 10px;
+            }
+            
+            .restart-btn {
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+                touch-action: manipulation;
+            }
+            
+            .mobile-controls {
+                display: block !important;
+                position: fixed;
+                bottom: 80px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0,0,0,0.8);
+                padding: 1rem;
+                border-radius: 10px;
+            }
+            
+            .mobile-btn {
+                background: rgba(255,255,255,0.2);
+                border: 2px solid #fff;
+                color: white;
+                padding: 1rem;
+                border-radius: 8px;
+                font-size: 1.2rem;
+                touch-action: manipulation;
+                user-select: none;
+            }
+            
+            .mobile-btn:active {
+                background: rgba(255,255,255,0.4);
+            }
+        }
     </style>
 </head>
 <body>
@@ -117,7 +200,19 @@
         
         <div class="controls">
             <p>🎮 <strong>Controls:</strong> Arrow Keys to Move • Spacebar to Shoot</p>
+            <p>📱 <strong>Mobile:</strong> Touch screen to move and shoot</p>
             <p>🎯 Destroy enemies to earn points!</p>
+        </div>
+        
+        <div class="mobile-controls" id="mobileControls" style="display: none;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; max-width: 300px; margin: 0 auto;">
+                <button class="mobile-btn" ontouchstart="mobileControl('left')" ontouchend="mobileControlEnd('left')">←</button>
+                <button class="mobile-btn" ontouchstart="mobileControl('up')" ontouchend="mobileControlEnd('up')">↑</button>
+                <button class="mobile-btn" ontouchstart="mobileControl('right')" ontouchend="mobileControlEnd('right')">→</button>
+                <div></div>
+                <button class="mobile-btn" ontouchstart="mobileControl('down')" ontouchend="mobileControlEnd('down')">↓</button>
+                <button class="mobile-btn" ontouchstart="mobileControl('shoot')" ontouchend="mobileControlEnd('shoot')">🔫</button>
+            </div>
         </div>
         
         <div class="game-over" id="gameOver">
@@ -352,6 +447,51 @@
             
             requestAnimationFrame(gameLoop);
         }
+        
+        // Mobile controls
+        function mobileControl(direction) {
+            keys['Arrow' + direction.charAt(0).toUpperCase() + direction.slice(1)] = true;
+            if (direction === 'shoot') {
+                keys['Space'] = true;
+            }
+        }
+        
+        function mobileControlEnd(direction) {
+            keys['Arrow' + direction.charAt(0).toUpperCase() + direction.slice(1)] = false;
+            if (direction === 'shoot') {
+                keys['Space'] = false;
+            }
+        }
+        
+        // Touch controls for canvas
+        let touchStartX = 0;
+        let touchStartY = 0;
+        
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            touchStartX = touch.clientX - rect.left;
+            touchStartY = touch.clientY - rect.top;
+            
+            // Shoot on touch
+            shoot();
+        });
+        
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            const touchX = touch.clientX - rect.left;
+            const touchY = touch.clientY - rect.top;
+            
+            // Move player towards touch position
+            const targetX = (touchX / canvas.width) * canvas.width - player.width / 2;
+            const targetY = (touchY / canvas.height) * canvas.height - player.height / 2;
+            
+            player.x = Math.max(0, Math.min(canvas.width - player.width, targetX));
+            player.y = Math.max(0, Math.min(canvas.height - player.height, targetY));
+        });
         
         // Initialize and start game
         initStars();
