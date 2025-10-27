@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Project Demos - Abdullahi .A.Osman</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .category-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .category-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        
+        .category-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        .demo-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+        
+        .demo-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .demo-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .demo-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .demo-link:hover {
+            color: #764ba2;
+        }
+        
+        .coming-soon {
+            color: #999;
+            font-style: italic;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+        }
+        
+        .back-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 3rem;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .categories {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-btn">← Back to Portfolio</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-play-circle"></i> Interactive Project Demos</h1>
+            <p>Experience my Python projects directly in your browser</p>
+        </div>
+        
+        <div class="categories">
+            <div class="category-card">
+                <div class="category-icon"><i class="fas fa-gamepad"></i></div>
+                <h3>🎮 Interactive Games</h3>
+                <p>Play games built with Python logic, now in your browser</p>
+                <ul class="demo-list">
+                    <li><a href="games/space-shooter.html" class="demo-link">🚀 Space Shooter Game</a></li>
+                    <li><a href="games/rock-paper-scissors.html" class="demo-link">✂️ Rock Paper Scissors</a></li>
+                    <li><a href="games/quiz-app.html" class="demo-link">🧠 Interactive Quiz</a></li>
+                </ul>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-icon"><i class="fas fa-briefcase"></i></div>
+                <h3>💼 Business Applications</h3>
+                <p>Professional tools for real-world business needs</p>
+                <ul class="demo-list">
+                    <li><a href="business-apps/banking-system.html" class="demo-link">🏦 Banking System</a></li>
+                    <li><a href="business-apps/expense-tracker.html" class="demo-link">💰 Expense Tracker</a></li>
+                    <li><a href="business-apps/library-manager.html" class="demo-link">📚 Library Manager</a></li>
+                </ul>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-icon"><i class="fas fa-tools"></i></div>
+                <h3>🛠️ Smart Tools</h3>
+                <p>Intelligent utilities and productivity applications</p>
+                <ul class="demo-list">
+                    <li><a href="smart-tools/calculator.html" class="demo-link">🧮 Advanced Calculator</a></li>
+                    <li><a href="smart-tools/password-manager.html" class="demo-link">🔐 Password Manager</a></li>
+                    <li><a href="smart-tools/ml-predictor.html" class="demo-link">🤖 ML Predictor</a></li>
+                </ul>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-icon"><i class="fas fa-chart-bar"></i></div>
+                <h3>📊 Data Analytics</h3>
+                <p>Data visualization and analysis tools</p>
+                <ul class="demo-list">
+                    <li><a href="data-analytics/sales-dashboard.html" class="demo-link">📈 Sales Dashboard</a></li>
+                    <li><a href="data-analytics/calorie-tracker.html" class="demo-link">🏃 Calorie Tracker</a></li>
+                    <li><a href="data-analytics/utility-monitor.html" class="demo-link">⚡ Utility Monitor</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>🚀 Built with passion by <strong>Abdullahi .A.Osman</strong></p>
+            <p><em>Transforming Python projects into interactive web experiences</em></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker - Interactive Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+        
+        .input-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .btn-income {
+            background: #007bff;
+        }
+        
+        .btn-income:hover {
+            background: #0056b3;
+        }
+        
+        .summary {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .summary-item.income {
+            border-left-color: #007bff;
+        }
+        
+        .summary-item.balance {
+            border-left-color: #ffc107;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .expenses-list {
+            grid-column: span 2;
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+        
+        .expense-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .expense-category {
+            background: #e9ecef;
+            padding: 0.25rem 0.5rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-left: 1rem;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .expenses-list {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-btn">← Back to Demos</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1>💰 Expense Tracker</h1>
+            <p>Manage your finances with this interactive expense tracking tool</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="input-section">
+                <h3>💸 Add Expense</h3>
+                <div class="form-group">
+                    <label for="expense-name">Expense Name</label>
+                    <input type="text" id="expense-name" placeholder="e.g., Groceries">
+                </div>
+                <div class="form-group">
+                    <label for="expense-amount">Amount ($)</label>
+                    <input type="number" id="expense-amount" placeholder="0.00" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="expense-category">Category</label>
+                    <select id="expense-category">
+                        <option value="Food">🍔 Food</option>
+                        <option value="Transportation">🚗 Transportation</option>
+                        <option value="Entertainment">🎬 Entertainment</option>
+                        <option value="Utilities">⚡ Utilities</option>
+                        <option value="Healthcare">🏥 Healthcare</option>
+                        <option value="Shopping">🛍️ Shopping</option>
+                        <option value="Other">📦 Other</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="addExpense()">Add Expense</button>
+                
+                <hr style="margin: 2rem 0;">
+                
+                <h3>💵 Add Income</h3>
+                <div class="form-group">
+                    <label for="income-amount">Income Amount ($)</label>
+                    <input type="number" id="income-amount" placeholder="0.00" step="0.01">
+                </div>
+                <button class="btn btn-income" onclick="addIncome()">Add Income</button>
+            </div>
+            
+            <div class="summary">
+                <h3>📊 Financial Summary</h3>
+                <div class="summary-item income">
+                    <span>Total Income</span>
+                    <span id="total-income">$0.00</span>
+                </div>
+                <div class="summary-item">
+                    <span>Total Expenses</span>
+                    <span id="total-expenses">$0.00</span>
+                </div>
+                <div class="summary-item balance">
+                    <span>Balance</span>
+                    <span id="balance">$0.00</span>
+                </div>
+            </div>
+            
+            <div class="expenses-list">
+                <h3>📝 Recent Transactions</h3>
+                <div id="transactions-list">
+                    <p style="text-align: center; color: #666; padding: 2rem;">No transactions yet. Add some income or expenses to get started!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let totalIncome = 0;
+        let totalExpenses = 0;
+        let transactions = [];
+
+        function addExpense() {
+            const name = document.getElementById('expense-name').value;
+            const amount = parseFloat(document.getElementById('expense-amount').value);
+            const category = document.getElementById('expense-category').value;
+
+            if (!name || !amount || amount <= 0) {
+                alert('Please enter valid expense details');
+                return;
+            }
+
+            totalExpenses += amount;
+            transactions.unshift({
+                type: 'expense',
+                name: name,
+                amount: amount,
+                category: category,
+                date: new Date().toLocaleDateString()
+            });
+
+            updateDisplay();
+            clearExpenseForm();
+        }
+
+        function addIncome() {
+            const amount = parseFloat(document.getElementById('income-amount').value);
+
+            if (!amount || amount <= 0) {
+                alert('Please enter a valid income amount');
+                return;
+            }
+
+            totalIncome += amount;
+            transactions.unshift({
+                type: 'income',
+                name: 'Income',
+                amount: amount,
+                category: 'Income',
+                date: new Date().toLocaleDateString()
+            });
+
+            updateDisplay();
+            document.getElementById('income-amount').value = '';
+        }
+
+        function updateDisplay() {
+            document.getElementById('total-income').textContent = `$${totalIncome.toFixed(2)}`;
+            document.getElementById('total-expenses').textContent = `$${totalExpenses.toFixed(2)}`;
+            
+            const balance = totalIncome - totalExpenses;
+            const balanceElement = document.getElementById('balance');
+            balanceElement.textContent = `$${balance.toFixed(2)}`;
+            balanceElement.style.color = balance >= 0 ? '#28a745' : '#dc3545';
+
+            updateTransactionsList();
+        }
+
+        function updateTransactionsList() {
+            const transactionsList = document.getElementById('transactions-list');
+            
+            if (transactions.length === 0) {
+                transactionsList.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">No transactions yet. Add some income or expenses to get started!</p>';
+                return;
+            }
+
+            transactionsList.innerHTML = '';
+            transactions.slice(0, 10).forEach(transaction => {
+                const transactionElement = document.createElement('div');
+                transactionElement.className = transaction.type === 'income' ? 'expense-item' : 'expense-item';
+                transactionElement.style.borderLeftColor = transaction.type === 'income' ? '#007bff' : '#dc3545';
+                
+                transactionElement.innerHTML = `
+                    <div>
+                        <strong>${transaction.name}</strong>
+                        <span class="expense-category">${transaction.category}</span>
+                    </div>
+                    <div>
+                        <span style="color: ${transaction.type === 'income' ? '#007bff' : '#dc3545'}">
+                            ${transaction.type === 'income' ? '+' : '-'}$${transaction.amount.toFixed(2)}
+                        </span>
+                        <small style="display: block; color: #666;">${transaction.date}</small>
+                    </div>
+                `;
+                
+                transactionsList.appendChild(transactionElement);
+            });
+        }
+
+        function clearExpenseForm() {
+            document.getElementById('expense-name').value = '';
+            document.getElementById('expense-amount').value = '';
+        }
+
+        // Initialize with sample data
+        function loadSampleData() {
+            totalIncome = 3500;
+            totalExpenses = 2150;
+            transactions = [
+                {type: 'income', name: 'Salary', amount: 3500, category: 'Income', date: '10/25/2025'},
+                {type: 'expense', name: 'Groceries', amount: 450, category: 'Food', date: '10/24/2025'},
+                {type: 'expense', name: 'Gas', amount: 60, category: 'Transportation', date: '10/23/2025'},
+                {type: 'expense', name: 'Netflix', amount: 15, category: 'Entertainment', date: '10/22/2025'},
+                {type: 'expense', name: 'Electricity Bill', amount: 120, category: 'Utilities', date: '10/21/2025'}
+            ];
+            updateDisplay();
+        }
+
+        // Load sample data on page load
+        loadSampleData();
+    </script>
+</body>
+</html>

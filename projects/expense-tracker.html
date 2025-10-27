@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Expense Tracker - Python Project Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .content {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .section h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        .summary {
+            grid-column: span 2;
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .summary-item {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        
+        .summary-item h4 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .expense-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .expense-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            border-bottom: 1px solid #dee2e6;
+            background: white;
+            margin-bottom: 0.5rem;
+            border-radius: 5px;
+        }
+        
+        .expense-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-btn">← Back to Portfolio</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1>💰 Interactive Expense Tracker</h1>
+            <p>Experience the Python expense tracker project in your browser</p>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h3>💸 Add Expense</h3>
+                <div class="form-group">
+                    <label>Expense Name</label>
+                    <input type="text" id="expenseName" placeholder="e.g., Groceries">
+                </div>
+                <div class="form-group">
+                    <label>Amount ($)</label>
+                    <input type="number" id="expenseAmount" placeholder="0.00" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="expenseCategory">
+                        <option value="Food">🍔 Food</option>
+                        <option value="Transportation">🚗 Transportation</option>
+                        <option value="Entertainment">🎬 Entertainment</option>
+                        <option value="Utilities">⚡ Utilities</option>
+                        <option value="Shopping">🛍️ Shopping</option>
+                        <option value="Healthcare">🏥 Healthcare</option>
+                        <option value="Other">📦 Other</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="addExpense()">Add Expense</button>
+            </div>
+            
+            <div class="section">
+                <h3>💵 Add Income</h3>
+                <div class="form-group">
+                    <label>Income Source</label>
+                    <input type="text" id="incomeName" placeholder="e.g., Salary">
+                </div>
+                <div class="form-group">
+                    <label>Amount ($)</label>
+                    <input type="number" id="incomeAmount" placeholder="0.00" step="0.01">
+                </div>
+                <button class="btn" onclick="addIncome()">Add Income</button>
+                
+                <h3 style="margin-top: 2rem;">📊 Recent Expenses</h3>
+                <div class="expense-list" id="expenseList">
+                    <div style="text-align: center; color: #666; padding: 2rem;">
+                        No expenses added yet
+                    </div>
+                </div>
+            </div>
+            
+            <div class="summary">
+                <h2>📈 Financial Summary</h2>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <h4 id="totalIncome">$0.00</h4>
+                        <p>Total Income</p>
+                    </div>
+                    <div class="summary-item">
+                        <h4 id="totalExpenses">$0.00</h4>
+                        <p>Total Expenses</p>
+                    </div>
+                    <div class="summary-item">
+                        <h4 id="balance">$0.00</h4>
+                        <p>Balance</p>
+                    </div>
+                    <div class="summary-item">
+                        <h4 id="expenseCount">0</h4>
+                        <p>Transactions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let expenses = [];
+        let totalIncome = 0;
+
+        function addExpense() {
+            const name = document.getElementById('expenseName').value;
+            const amount = parseFloat(document.getElementById('expenseAmount').value);
+            const category = document.getElementById('expenseCategory').value;
+
+            if (!name || !amount || amount <= 0) {
+                alert('Please enter valid expense details');
+                return;
+            }
+
+            const expense = {
+                id: Date.now(),
+                name: name,
+                amount: amount,
+                category: category,
+                date: new Date().toLocaleDateString()
+            };
+
+            expenses.push(expense);
+            updateDisplay();
+            clearExpenseForm();
+        }
+
+        function addIncome() {
+            const name = document.getElementById('incomeName').value;
+            const amount = parseFloat(document.getElementById('incomeAmount').value);
+
+            if (!name || !amount || amount <= 0) {
+                alert('Please enter valid income details');
+                return;
+            }
+
+            totalIncome += amount;
+            updateDisplay();
+            clearIncomeForm();
+        }
+
+        function removeExpense(id) {
+            expenses = expenses.filter(expense => expense.id !== id);
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            // Update expense list
+            const expenseList = document.getElementById('expenseList');
+            if (expenses.length === 0) {
+                expenseList.innerHTML = '<div style="text-align: center; color: #666; padding: 2rem;">No expenses added yet</div>';
+            } else {
+                expenseList.innerHTML = expenses.map(expense => `
+                    <div class="expense-item">
+                        <div>
+                            <strong>${expense.name}</strong><br>
+                            <small>${expense.category} • ${expense.date}</small>
+                        </div>
+                        <div style="text-align: right;">
+                            <strong>$${expense.amount.toFixed(2)}</strong><br>
+                            <button class="btn btn-danger" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="removeExpense(${expense.id})">Remove</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Update summary
+            const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+            const balance = totalIncome - totalExpenses;
+
+            document.getElementById('totalIncome').textContent = `$${totalIncome.toFixed(2)}`;
+            document.getElementById('totalExpenses').textContent = `$${totalExpenses.toFixed(2)}`;
+            document.getElementById('balance').textContent = `$${balance.toFixed(2)}`;
+            document.getElementById('balance').style.color = balance >= 0 ? '#28a745' : '#dc3545';
+            document.getElementById('expenseCount').textContent = expenses.length;
+        }
+
+        function clearExpenseForm() {
+            document.getElementById('expenseName').value = '';
+            document.getElementById('expenseAmount').value = '';
+        }
+
+        function clearIncomeForm() {
+            document.getElementById('incomeName').value = '';
+            document.getElementById('incomeAmount').value = '';
+        }
+
+        // Add some sample data
+        setTimeout(() => {
+            totalIncome = 3500;
+            expenses = [
+                {id: 1, name: 'Groceries', amount: 120.50, category: 'Food', date: '1/15/2025'},
+                {id: 2, name: 'Gas', amount: 45.00, category: 'Transportation', date: '1/14/2025'},
+                {id: 3, name: 'Netflix', amount: 15.99, category: 'Entertainment', date: '1/13/2025'}
+            ];
+            updateDisplay();
+        }, 1000);
+    </script>
+</body>
+</html>

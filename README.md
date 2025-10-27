@@ -28,11 +28,13 @@
 <td width="50%">
 
 ### 🎮 **Interactive Games**
+
 - 🚀 **Space Shooter** - Arcade-style action game
 - ✂️ **Rock Paper Scissors** - Classic game vs AI
 - 🧠 **Quiz App** - Knowledge testing platform
 
 ### � **Businaess Applications**
+
 - 🏦 **Banking System** - Complete financial management
 - 💰 **Expense Tracker** - Personal finance tool
 - 📚 **Library Manager** - Book inventory system
@@ -41,11 +43,13 @@
 <td width="50%">
 
 ### 🤖 **Smart Tools**
+
 - 🧮 **Advanced Calculator** - With history tracking
 - 🔐 **Password Manager** - Secure credential storage
 - 🤖 **ML Pipeline** - Data analysis & predictions
 
 ### 📊 **Data Analytics**
+
 - 📈 **Sales Analytics** - Business intelligence
 - 🏃 **Calorie Tracker** - Health monitoring
 - ⚡ **Utility Monitors** - Resource tracking
@@ -59,6 +63,7 @@
 ## 🌟 Featured Projects
 
 ### 🏦 Banking System
+
 ```
 💳 Account: 62862970323787
 👤 Holder: Abdullahi Osman
@@ -71,6 +76,7 @@
 ```
 
 ### 🎮 Space Shooter Game
+
 ```
 🚀 SPACE DEFENDER
 ━━━━━━━━━━━━━━━━━━━━
@@ -81,6 +87,7 @@
 ```
 
 ### 🤖 Machine Learning Results
+
 ```
 📊 ML Training Complete
 ━━━━━━━━━━━━━━━━━━━━━━━
@@ -96,11 +103,11 @@
 
 <div align="center">
 
-| **Core Libraries** | **Development** | **Data Science** |
-|:------------------:|:---------------:|:----------------:|
-| ![Pandas](https://img.shields.io/badge/pandas-150458?style=flat&logo=pandas&logoColor=white) | ![Pygame](https://img.shields.io/badge/Pygame-00599C?style=flat&logo=python&logoColor=white) | ![NumPy](https://img.shields.io/badge/numpy-013243?style=flat&logo=numpy&logoColor=white) |
-| ![Requests](https://img.shields.io/badge/Requests-2CA5E0?style=flat&logo=python&logoColor=white) | ![Pickle](https://img.shields.io/badge/Pickle-FFD43B?style=flat&logo=python&logoColor=white) | ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?style=flat&logo=python&logoColor=white) |
-| ![CSV](https://img.shields.io/badge/CSV-239120?style=flat&logo=microsoft-excel&logoColor=white) | ![Random](https://img.shields.io/badge/Random-FF6B6B?style=flat&logo=python&logoColor=white) | ![Scikit Learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat&logo=scikit-learn&logoColor=white) |
+|                                        **Core Libraries**                                        |                                       **Development**                                        |                                                **Data Science**                                                 |
+| :----------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
+|   ![Pandas](https://img.shields.io/badge/pandas-150458?style=flat&logo=pandas&logoColor=white)   | ![Pygame](https://img.shields.io/badge/Pygame-00599C?style=flat&logo=python&logoColor=white) |            ![NumPy](https://img.shields.io/badge/numpy-013243?style=flat&logo=numpy&logoColor=white)            |
+| ![Requests](https://img.shields.io/badge/Requests-2CA5E0?style=flat&logo=python&logoColor=white) | ![Pickle](https://img.shields.io/badge/Pickle-FFD43B?style=flat&logo=python&logoColor=white) |      ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?style=flat&logo=python&logoColor=white)       |
+| ![CSV](https://img.shields.io/badge/CSV-239120?style=flat&logo=microsoft-excel&logoColor=white)  | ![Random](https://img.shields.io/badge/Random-FF6B6B?style=flat&logo=python&logoColor=white) | ![Scikit Learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat&logo=scikit-learn&logoColor=white) |
 
 </div>
 
@@ -128,12 +135,12 @@ python expense_tracker.py
 
 <div align="center">
 
-| **Skill Area** | **Projects** | **Proficiency** |
-|:---------------|:-------------|:---------------:|
-| 🎮 **Game Development** | 4 projects | ████████░░ 80% |
-| 💼 **Business Apps** | 6 projects | █████████░ 90% |
-| 🤖 **Machine Learning** | 3 projects | ███████░░░ 70% |
-| 📊 **Data Analysis** | 5 projects | ████████░░ 85% |
+| **Skill Area**          | **Projects** | **Proficiency** |
+| :---------------------- | :----------- | :-------------: |
+| 🎮 **Game Development** | 4 projects   | ████████░░ 80%  |
+| 💼 **Business Apps**    | 6 projects   | █████████░ 90%  |
+| 🤖 **Machine Learning** | 3 projects   | ███████░░░ 70%  |
+| 📊 **Data Analysis**    | 5 projects   | ████████░░ 85%  |
 
 </div>
 
@@ -155,7 +162,7 @@ python expense_tracker.py
 
 <div align="center">
 
-*"Every line of code is a step forward in mastering the art of programming."*
+_"Every line of code is a step forward in mastering the art of programming."_
 
 **🎯 100 Days • 25+ Projects • Endless Learning**
 
