@@ -5,11 +5,13 @@ Thank you for your interest in contributing to this project! This document provi
 ## 🤝 How to Contribute
 
 ### Reporting Issues
+
 - Use the GitHub Issues tab to report bugs or suggest features
 - Provide clear descriptions and steps to reproduce issues
 - Include screenshots or code snippets when helpful
 
 ### Submitting Changes
+
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
@@ -21,12 +23,14 @@ Thank you for your interest in contributing to this project! This document provi
 ## 📝 Code Style Guidelines
 
 ### Python Code
+
 - Follow PEP 8 style guidelines
 - Use meaningful variable and function names
 - Include docstrings for functions and classes
 - Add comments for complex logic
 
 ### HTML/CSS/JavaScript
+
 - Use consistent indentation (2 spaces)
 - Follow semantic HTML practices
 - Use modern CSS features
@@ -35,21 +39,25 @@ Thank you for your interest in contributing to this project! This document provi
 ## 🎯 Types of Contributions Welcome
 
 ### New Interactive Demos
+
 - Convert existing Python projects to web demos
 - Create new educational examples
 - Improve existing demo functionality
 
 ### Documentation
+
 - Improve README files
 - Add code comments
 - Create tutorials or guides
 
 ### Bug Fixes
+
 - Fix issues in existing code
 - Improve error handling
 - Enhance user experience
 
 ### Features
+
 - Add new Python projects
 - Enhance existing projects
 - Improve web interface
@@ -76,9 +84,10 @@ Contributors will be acknowledged in the project documentation. Thank you for he
 ## 📞 Questions?
 
 Feel free to reach out via:
+
 - GitHub Issues for project-related questions
 - Email: Osman6176@gmail.com for general inquiries
 
 ---
 
-*Happy coding! 🐍*
+_Happy coding! 🐍_
