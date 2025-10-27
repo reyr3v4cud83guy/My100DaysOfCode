@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Predictor - Interactive Demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+        
+        .controls-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            height: fit-content;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .btn:hover {
+            background: #34495e;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #3498db;
+        }
+        
+        .btn-secondary:hover {
+            background: #2980b9;
+        }
+        
+        .prediction-result {
+            background: #e8f5e8;
+            border: 2px solid #27ae60;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+        }
+        
+        .prediction-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 0.5rem;
+        }
+        
+        .confidence-score {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .model-stats {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #2c3e50;
+        }
+        
+        .visualization-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            height: 300px;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th,
+        .table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .table th {
+            background: #e9ecef;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .table tr:hover {
+            background: #f1f3f4;
+        }
+        
+        .feature-importance {
+            display: grid;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .feature-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .feature-name {
+            min-width: 120px;
+            font-weight: 600;
+        }
+        
+        .feature-progress {
+            flex: 1;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .feature-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            transition: width 0.3s;
+        }
+        
+        .feature-value {
+            min-width: 50px;
+            text-align: right;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .training-status {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+            display: none;
+        }
+        
+        .training-status.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-container {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-btn">← Back to Demos</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🤖 ML Predictor</h1>
+            <p>Interactive Machine Learning prediction system with data visualization</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="controls-section">
+                <h3>🎯 Make Predictions</h3>
+                
+                <div class="form-group">
+                    <label for="predictionType">Prediction Model</label>
+                    <select id="predictionType" onchange="updateInputFields()">
+                        <option value="house_price">House Price Prediction</option>
+                        <option value="stock_price">Stock Price Prediction</option>
+                        <option value="sales_forecast">Sales Forecasting</option>
+                        <option value="customer_churn">Customer Churn</option>
+                    </select>
+                </div>
+                
+                <div id="inputFields">
+                    <!-- Dynamic input fields will be populated here -->
+                </div>
+                
+                <button class="btn" onclick="makePrediction()">🔮 Make Prediction</button>
+                
+                <div class="training-status" id="trainingStatus">
+                    <div>🔄 Training model...</div>
+                    <div style="margin-top: 0.5rem; font-size: 0.9rem;">Processing data and optimizing parameters</div>
+                </div>
+                
+                <div class="prediction-result" id="predictionResult" style="display: none;">
+                    <div class="prediction-value" id="predictionValue">$0</div>
+                    <div class="confidence-score" id="confidenceScore">Confidence: 0%</div>
+                </div>
+                
+                <div class="model-stats">
+                    <h4>📊 Model Performance</h4>
+                    <div style="margin-top: 1rem;">
+                        <div><strong>Accuracy:</strong> <span id="modelAccuracy">85.4%</span></div>
+                        <div><strong>Training Samples:</strong> <span id="trainingSamples">1,247</span></div>
+                        <div><strong>Features:</strong> <span id="featureCount">8</span></div>
+                        <div><strong>Algorithm:</strong> <span id="algorithm">Random Forest</span></div>
+                    </div>
+                </div>
+                
+                <h4>🎯 Feature Importance</h4>
+                <div class="feature-importance" id="featureImportance">
+                    <!-- Feature importance bars will be populated here -->
+                </div>
+                
+                <button class="btn btn-secondary" onclick="retrainModel()">🔄 Retrain Model</button>
+            </div>
+            
+            <div class="visualization-section">
+                <h3>📈 Data Visualization</h3>
+                
+                <div class="chart-container">
+                    <canvas id="predictionChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="accuracyChart"></canvas>
+                </div>
+                
+                <div class="data-table">
+                    <h4 style="padding: 1rem; background: #e9ecef; margin: 0;">Recent Predictions</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Input</th>
+                                <th>Prediction</th>
+                                <th>Confidence</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="predictionsTable">
+                            <!-- Predictions will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let predictionChart, accuracyChart;
+        let predictions = [];
+        
+        const modelConfigs = {
+            house_price: {
+                name: "House Price Prediction",
+                fields: [
+                    { name: "bedrooms", label: "Bedrooms", type: "number", min: 1, max: 10, value: 3 },
+                    { name: "bathrooms", label: "Bathrooms", type: "number", min: 1, max: 5, step: 0.5, value: 2 },
+                    { name: "sqft", label: "Square Feet", type: "number", min: 500, max: 5000, value: 1500 },
+                    { name: "age", label: "House Age (years)", type: "number", min: 0, max: 100, value: 10 }
+                ],
+                features: ["Square Feet", "Bedrooms", "Location", "Age", "Bathrooms", "Garage", "Garden", "Condition"],
+                importance: [0.35, 0.20, 0.18, 0.12, 0.08, 0.04, 0.02, 0.01],
+                unit: "$",
+                baseValue: 250000
+            },
+            stock_price: {
+                name: "Stock Price Prediction",
+                fields: [
+                    { name: "volume", label: "Trading Volume", type: "number", min: 1000, max: 1000000, value: 50000 },
+                    { name: "pe_ratio", label: "P/E Ratio", type: "number", min: 5, max: 50, step: 0.1, value: 15.5 },
+                    { name: "market_cap", label: "Market Cap (B)", type: "number", min: 1, max: 1000, value: 50 },
+                    { name: "dividend", label: "Dividend Yield %", type: "number", min: 0, max: 10, step: 0.1, value: 2.5 }
+                ],
+                features: ["Volume", "P/E Ratio", "Market Cap", "Dividend", "Revenue", "Debt Ratio", "ROE", "Beta"],
+                importance: [0.25, 0.22, 0.20, 0.15, 0.10, 0.05, 0.02, 0.01],
+                unit: "$",
+                baseValue: 150
+            },
+            sales_forecast: {
+                name: "Sales Forecasting",
+                fields: [
+                    { name: "marketing_spend", label: "Marketing Spend ($)", type: "number", min: 1000, max: 100000, value: 15000 },
+                    { name: "season", label: "Season", type: "select", options: ["Spring", "Summer", "Fall", "Winter"], value: "Summer" },
+                    { name: "product_price", label: "Product Price ($)", type: "number", min: 10, max: 1000, value: 99 },
+                    { name: "competitor_count", label: "Competitors", type: "number", min: 1, max: 20, value: 5 }
+                ],
+                features: ["Marketing", "Seasonality", "Price", "Competition", "Economy", "Trends", "Inventory", "Reviews"],
+                importance: [0.30, 0.25, 0.20, 0.12, 0.08, 0.03, 0.01, 0.01],
+                unit: "",
+                baseValue: 50000
+            },
+            customer_churn: {
+                name: "Customer Churn Prediction",
+                fields: [
+                    { name: "tenure", label: "Customer Tenure (months)", type: "number", min: 1, max: 120, value: 24 },
+                    { name: "monthly_charges", label: "Monthly Charges ($)", type: "number", min: 20, max: 200, value: 75 },
+                    { name: "support_tickets", label: "Support Tickets", type: "number", min: 0, max: 20, value: 2 },
+                    { name: "contract_type", label: "Contract Type", type: "select", options: ["Month-to-month", "One year", "Two year"], value: "One year" }
+                ],
+                features: ["Tenure", "Charges", "Support", "Contract", "Usage", "Payment", "Services", "Satisfaction"],
+                importance: [0.28, 0.22, 0.18, 0.15, 0.10, 0.04, 0.02, 0.01],
+                unit: "%",
+                baseValue: 25
+            }
+        };
+
+        function updateInputFields() {
+            const predictionType = document.getElementById('predictionType').value;
+            const config = modelConfigs[predictionType];
+            const container = document.getElementById('inputFields');
+            
+            container.innerHTML = '';
+            
+            config.fields.forEach(field => {
+                const formGroup = document.createElement('div');
+                formGroup.className = 'form-group';
+                
+                if (field.type === 'select') {
+                    formGroup.innerHTML = `
+                        <label for="${field.name}">${field.label}</label>
+                        <select id="${field.name}">
+                            ${field.options.map(option => 
+                                `<option value="${option}" ${option === field.value ? 'selected' : ''}>${option}</option>`
+                            ).join('')}
+                        </select>
+                    `;
+                } else {
+                    formGroup.innerHTML = `
+                        <label for="${field.name}">${field.label}</label>
+                        <input type="${field.type}" id="${field.name}" 
+                               min="${field.min || ''}" max="${field.max || ''}" 
+                               step="${field.step || ''}" value="${field.value}">
+                    `;
+                }
+                
+                container.appendChild(formGroup);
+            });
+            
+            updateFeatureImportance();
+            updateModelStats();
+        }
+
+        function updateFeatureImportance() {
+            const predictionType = document.getElementById('predictionType').value;
+            const config = modelConfigs[predictionType];
+            const container = document.getElementById('featureImportance');
+            
+            container.innerHTML = '';
+            
+            config.features.forEach((feature, index) => {
+                const importance = config.importance[index];
+                const featureBar = document.createElement('div');
+                featureBar.className = 'feature-bar';
+                featureBar.innerHTML = `
+                    <div class="feature-name">${feature}</div>
+                    <div class="feature-progress">
+                        <div class="feature-fill" style="width: ${importance * 100}%"></div>
+                    </div>
+                    <div class="feature-value">${(importance * 100).toFixed(1)}%</div>
+                `;
+                container.appendChild(featureBar);
+            });
+        }
+
+        function updateModelStats() {
+            const predictionType = document.getElementById('predictionType').value;
+            const config = modelConfigs[predictionType];
+            
+            // Simulate different model stats for different prediction types
+            const stats = {
+                house_price: { accuracy: "89.2%", samples: "2,341", features: "8", algorithm: "Random Forest" },
+                stock_price: { accuracy: "76.8%", samples: "5,678", features: "12", algorithm: "LSTM Neural Network" },
+                sales_forecast: { accuracy: "82.5%", samples: "1,892", features: "9", algorithm: "Gradient Boosting" },
+                customer_churn: { accuracy: "91.3%", samples: "3,456", features: "11", algorithm: "XGBoost" }
+            };
+            
+            const stat = stats[predictionType];
+            document.getElementById('modelAccuracy').textContent = stat.accuracy;
+            document.getElementById('trainingSamples').textContent = stat.samples;
+            document.getElementById('featureCount').textContent = stat.features;
+            document.getElementById('algorithm').textContent = stat.algorithm;
+        }
+
+        function makePrediction() {
+            const predictionType = document.getElementById('predictionType').value;
+            const config = modelConfigs[predictionType];
+            
+            // Show training status
+            document.getElementById('trainingStatus').classList.add('active');
+            document.getElementById('predictionResult').style.display = 'none';
+            
+            setTimeout(() => {
+                // Hide training status
+                document.getElementById('trainingStatus').classList.remove('active');
+                
+                // Calculate prediction based on inputs
+                let prediction = config.baseValue;
+                let inputSummary = [];
+                
+                config.fields.forEach(field => {
+                    const value = document.getElementById(field.name).value;
+                    inputSummary.push(`${field.label}: ${value}`);
+                    
+                    // Simple prediction logic (in real ML, this would be much more complex)
+                    if (field.type === 'number') {
+                        const numValue = parseFloat(value);
+                        prediction += (numValue - field.value) * (Math.random() * 1000 + 100);
+                    }
+                });
+                
+                // Add some randomness to make it more realistic
+                prediction *= (0.8 + Math.random() * 0.4);
+                
+                // Format prediction
+                let formattedPrediction;
+                if (config.unit === '$') {
+                    formattedPrediction = '$' + Math.round(prediction).toLocaleString();
+                } else if (config.unit === '%') {
+                    prediction = Math.max(0, Math.min(100, prediction));
+                    formattedPrediction = Math.round(prediction) + '%';
+                } else {
+                    formattedPrediction = Math.round(prediction).toLocaleString();
+                }
+                
+                const confidence = Math.round(75 + Math.random() * 20);
+                
+                // Display result
+                document.getElementById('predictionValue').textContent = formattedPrediction;
+                document.getElementById('confidenceScore').textContent = `Confidence: ${confidence}%`;
+                document.getElementById('predictionResult').style.display = 'block';
+                
+                // Add to predictions table
+                addPredictionToTable(inputSummary.join(', '), formattedPrediction, confidence + '%');
+                
+                // Update charts
+                updateCharts();
+                
+            }, 2000);
+        }
+
+        function addPredictionToTable(input, prediction, confidence) {
+            const tableBody = document.getElementById('predictionsTable');
+            const row = document.createElement('tr');
+            const time = new Date().toLocaleTimeString();
+            
+            row.innerHTML = `
+                <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">${input}</td>
+                <td><strong>${prediction}</strong></td>
+                <td>${confidence}</td>
+                <td>${time}</td>
+            `;
+            
+            tableBody.insertBefore(row, tableBody.firstChild);
+            
+            // Keep only last 10 predictions
+            while (tableBody.children.length > 10) {
+                tableBody.removeChild(tableBody.lastChild);
+            }
+        }
+
+        function retrainModel() {
+            document.getElementById('trainingStatus').classList.add('active');
+            
+            setTimeout(() => {
+                document.getElementById('trainingStatus').classList.remove('active');
+                
+                // Simulate improved accuracy
+                const currentAccuracy = parseFloat(document.getElementById('modelAccuracy').textContent);
+                const newAccuracy = Math.min(95, currentAccuracy + Math.random() * 3);
+                document.getElementById('modelAccuracy').textContent = newAccuracy.toFixed(1) + '%';
+                
+                alert('Model retrained successfully! Accuracy improved to ' + newAccuracy.toFixed(1) + '%');
+            }, 3000);
+        }
+
+        function initCharts() {
+            // Prediction trend chart
+            const predictionCtx = document.getElementById('predictionChart').getContext('2d');
+            predictionChart = new Chart(predictionCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Predictions vs Actual',
+                        data: [85, 89, 92, 88, 94, 91],
+                        borderColor: '#2c3e50',
+                        backgroundColor: 'rgba(44, 62, 80, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Model Accuracy Over Time'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 70,
+                            max: 100
+                        }
+                    }
+                }
+            });
+
+            // Model comparison chart
+            const accuracyCtx = document.getElementById('accuracyChart').getContext('2d');
+            accuracyChart = new Chart(accuracyCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Linear Reg.', 'Random Forest', 'Neural Net', 'XGBoost'],
+                    datasets: [{
+                        label: 'Accuracy (%)',
+                        data: [72, 85, 88, 91],
+                        backgroundColor: [
+                            'rgba(52, 152, 219, 0.8)',
+                            'rgba(46, 204, 113, 0.8)',
+                            'rgba(155, 89, 182, 0.8)',
+                            'rgba(241, 196, 15, 0.8)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Model Performance Comparison'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 60,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateCharts() {
+            // Add some random variation to simulate real-time updates
+            const newAccuracy = 85 + Math.random() * 10;
+            predictionChart.data.datasets[0].data.push(newAccuracy);
+            predictionChart.data.labels.push('Now');
+            
+            if (predictionChart.data.labels.length > 10) {
+                predictionChart.data.labels.shift();
+                predictionChart.data.datasets[0].data.shift();
+            }
+            
+            predictionChart.update();
+        }
+
+        // Initialize the ML predictor
+        document.addEventListener('DOMContentLoaded', function() {
+            updateInputFields();
+            initCharts();
+        });
+    </script>
+</body>
+</html>

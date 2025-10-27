@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utility Monitor - Interactive Demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+        
+        .controls-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            height: fit-content;
+        }
+        
+        .utility-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .utility-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .utility-card.active {
+            border-color: #f39c12;
+            background: #fef9e7;
+        }
+        
+        .utility-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .utility-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            background: #f39c12;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .btn:hover {
+            background: #e67e22;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+        }
+        
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+        
+        .current-usage {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #f39c12;
+        }
+        
+        .usage-display {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #f39c12;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .usage-label {
+            text-align: center;
+            color: #666;
+        }
+        
+        .cost-estimate {
+            background: #e8f5e8;
+            border: 2px solid #27ae60;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+        }
+        
+        .cost-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        
+        .dashboard-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #f39c12;
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #f39c12;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            height: 300px;
+        }
+        
+        .usage-log {
+            background: white;
+            border-radius: 8px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .usage-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .usage-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .usage-info h4 {
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+        
+        .usage-details {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .usage-cost {
+            font-weight: bold;
+            color: #f39c12;
+            font-size: 1.1rem;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-weight: bold;
+        }
+        
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 2px solid #ffc107;
+        }
+        
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #dc3545;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .utility-selector {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-btn">← Back to Demos</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1>⚡ Utility Monitor</h1>
+            <p>Track and optimize your home energy and water consumption</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="controls-section">
+                <h3>🏠 Select Utility</h3>
+                <div class="utility-selector">
+                    <div class="utility-card active" onclick="selectUtility('electricity')" id="electricityCard">
+                        <div class="utility-icon">⚡</div>
+                        <div>Electricity</div>
+                    </div>
+                    <div class="utility-card" onclick="selectUtility('water')" id="waterCard">
+                        <div class="utility-icon">💧</div>
+                        <div>Water</div>
+                    </div>
+                    <div class="utility-card" onclick="selectUtility('gas')" id="gasCard">
+                        <div class="utility-icon">🔥</div>
+                        <div>Natural Gas</div>
+                    </div>
+                    <div class="utility-card" onclick="selectUtility('heating')" id="heatingCard">
+                        <div class="utility-icon">🌡️</div>
+                        <div>Heating</div>
+                    </div>
+                </div>
+                
+                <div class="current-usage">
+                    <div class="usage-display" id="currentUsage">0</div>
+                    <div class="usage-label" id="usageUnit">kWh</div>
+                    <div style="text-align: center; margin-top: 0.5rem; color: #666;">Current Reading</div>
+                </div>
+                
+                <div class="cost-estimate">
+                    <div>Estimated Monthly Cost</div>
+                    <div class="cost-value" id="monthlyCost">$0.00</div>
+                </div>
+                
+                <h4>📊 Add Reading</h4>
+                <div class="form-group">
+                    <label for="usageValue">Usage Value</label>
+                    <input type="number" id="usageValue" placeholder="Enter reading" min="0" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label for="readingDate">Date</label>
+                    <input type="date" id="readingDate">
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes (Optional)</label>
+                    <input type="text" id="notes" placeholder="e.g., High usage due to AC">
+                </div>
+                
+                <button class="btn" onclick="addReading()">Add Reading</button>
+                
+                <div id="alertContainer"></div>
+                
+                <h4 style="margin-top: 2rem;">⚙️ Settings</h4>
+                <div class="form-group">
+                    <label for="ratePerUnit">Rate per Unit ($)</label>
+                    <input type="number" id="ratePerUnit" step="0.01" min="0" onchange="updateCosts()">
+                </div>
+                <div class="form-group">
+                    <label for="budgetLimit">Monthly Budget ($)</label>
+                    <input type="number" id="budgetLimit" step="1" min="0" onchange="checkBudget()">
+                </div>
+                
+                <button class="btn btn-danger" onclick="clearData()" style="margin-top: 2rem;">Clear All Data</button>
+            </div>
+            
+            <div class="dashboard-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalUsage">0</div>
+                        <div class="stat-label">Total This Month</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="averageDaily">0</div>
+                        <div class="stat-label">Daily Average</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalCost">$0</div>
+                        <div class="stat-label">Month Cost</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="efficiency">0%</div>
+                        <div class="stat-label">Efficiency</div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="usageChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="costChart"></canvas>
+                </div>
+                
+                <h3>📋 Usage History</h3>
+                <div class="usage-log" id="usageLog">
+                    <div style="text-align: center; padding: 2rem; color: #666;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;">📊</div>
+                        <p>No usage data recorded yet.</p>
+                        <p>Add some readings to start monitoring!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUtility = 'electricity';
+        let usageChart, costChart;
+        
+        const utilityData = {
+            electricity: {
+                readings: [
+                    { value: 450, date: '2024-10-01', cost: 67.50, notes: 'Monthly reading' },
+                    { value: 520, date: '2024-10-15', cost: 78.00, notes: 'Mid-month check' },
+                    { value: 580, date: '2024-10-25', cost: 87.00, notes: 'High AC usage' }
+                ],
+                unit: 'kWh',
+                rate: 0.15,
+                budget: 100,
+                icon: '⚡'
+            },
+            water: {
+                readings: [
+                    { value: 2500, date: '2024-10-01', cost: 45.00, notes: 'Monthly reading' },
+                    { value: 2750, date: '2024-10-15', cost: 49.50, notes: 'Garden watering' },
+                    { value: 2900, date: '2024-10-25', cost: 52.20, notes: 'Normal usage' }
+                ],
+                unit: 'Gallons',
+                rate: 0.018,
+                budget: 60,
+                icon: '💧'
+            },
+            gas: {
+                readings: [
+                    { value: 85, date: '2024-10-01', cost: 102.00, notes: 'Monthly reading' },
+                    { value: 92, date: '2024-10-15', cost: 110.40, notes: 'Heating season' },
+                    { value: 98, date: '2024-10-25', cost: 117.60, notes: 'Cold weather' }
+                ],
+                unit: 'Therms',
+                rate: 1.20,
+                budget: 150,
+                icon: '🔥'
+            },
+            heating: {
+                readings: [
+                    { value: 1200, date: '2024-10-01', cost: 180.00, notes: 'Monthly reading' },
+                    { value: 1350, date: '2024-10-15', cost: 202.50, notes: 'Increased usage' },
+                    { value: 1480, date: '2024-10-25', cost: 222.00, notes: 'Peak season' }
+                ],
+                unit: 'BTU',
+                rate: 0.15,
+                budget: 250,
+                icon: '🌡️'
+            }
+        };
+
+        function selectUtility(utility) {
+            currentUtility = utility;
+            
+            // Update active card
+            document.querySelectorAll('.utility-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            document.getElementById(utility + 'Card').classList.add('active');
+            
+            // Update form and display
+            updateDisplay();
+            updateSettings();
+        }
+
+        function updateDisplay() {
+            const data = utilityData[currentUtility];
+            const latestReading = data.readings[data.readings.length - 1];
+            
+            // Update current usage display
+            document.getElementById('currentUsage').textContent = latestReading ? latestReading.value : 0;
+            document.getElementById('usageUnit').textContent = data.unit;
+            
+            // Update monthly cost estimate
+            const monthlyUsage = calculateMonthlyUsage();
+            const monthlyCost = monthlyUsage * data.rate;
+            document.getElementById('monthlyCost').textContent = '$' + monthlyCost.toFixed(2);
+            
+            // Update stats
+            updateStats();
+            updateUsageLog();
+            updateCharts();
+            checkBudget();
+        }
+
+        function updateSettings() {
+            const data = utilityData[currentUtility];
+            document.getElementById('ratePerUnit').value = data.rate;
+            document.getElementById('budgetLimit').value = data.budget;
+            document.getElementById('readingDate').value = new Date().toISOString().split('T')[0];
+        }
+
+        function addReading() {
+            const value = parseFloat(document.getElementById('usageValue').value);
+            const date = document.getElementById('readingDate').value;
+            const notes = document.getElementById('notes').value.trim();
+
+            if (!value || value <= 0 || !date) {
+                alert('Please enter a valid usage value and date!');
+                return;
+            }
+
+            const data = utilityData[currentUtility];
+            const cost = value * data.rate;
+            
+            const newReading = {
+                value: value,
+                date: date,
+                cost: cost,
+                notes: notes || 'Manual reading'
+            };
+
+            data.readings.push(newReading);
+            data.readings.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            // Clear form
+            document.getElementById('usageValue').value = '';
+            document.getElementById('notes').value = '';
+            
+            updateDisplay();
+            showNotification(`${data.icon} Reading added: ${value} ${data.unit}`, 'success');
+        }
+
+        function calculateMonthlyUsage() {
+            const data = utilityData[currentUtility];
+            if (data.readings.length === 0) return 0;
+            
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+            
+            const monthlyReadings = data.readings.filter(reading => {
+                const readingDate = new Date(reading.date);
+                return readingDate.getMonth() === currentMonth && readingDate.getFullYear() === currentYear;
+            });
+            
+            if (monthlyReadings.length === 0) return 0;
+            
+            const latestReading = monthlyReadings[monthlyReadings.length - 1];
+            const firstReading = monthlyReadings[0];
+            
+            return latestReading.value - firstReading.value;
+        }
+
+        function updateStats() {
+            const data = utilityData[currentUtility];
+            const monthlyUsage = calculateMonthlyUsage();
+            const totalCost = monthlyUsage * data.rate;
+            const averageDaily = monthlyUsage / new Date().getDate();
+            const efficiency = Math.max(0, 100 - ((monthlyUsage / (data.budget / data.rate)) * 100));
+
+            document.getElementById('totalUsage').textContent = Math.round(monthlyUsage);
+            document.getElementById('averageDaily').textContent = averageDaily.toFixed(1);
+            document.getElementById('totalCost').textContent = '$' + totalCost.toFixed(0);
+            document.getElementById('efficiency').textContent = Math.round(efficiency) + '%';
+        }
+
+        function updateUsageLog() {
+            const data = utilityData[currentUtility];
+            const container = document.getElementById('usageLog');
+            
+            if (data.readings.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: #666;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;">📊</div>
+                        <p>No usage data recorded yet.</p>
+                        <p>Add some readings to start monitoring!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+            
+            // Show most recent readings first
+            const sortedReadings = [...data.readings].reverse();
+            
+            sortedReadings.forEach((reading, index) => {
+                const usageItem = document.createElement('div');
+                usageItem.className = 'usage-item';
+                
+                const previousReading = sortedReadings[index + 1];
+                const usage = previousReading ? reading.value - previousReading.value : reading.value;
+                
+                usageItem.innerHTML = `
+                    <div class="usage-info">
+                        <h4>${data.icon} ${usage.toFixed(1)} ${data.unit}</h4>
+                        <div class="usage-details">
+                            ${new Date(reading.date).toLocaleDateString()} • ${reading.notes}
+                        </div>
+                    </div>
+                    <div class="usage-cost">$${(usage * data.rate).toFixed(2)}</div>
+                `;
+                container.appendChild(usageItem);
+            });
+        }
+
+        function initCharts() {
+            // Usage trend chart
+            const usageCtx = document.getElementById('usageChart').getContext('2d');
+            usageChart = new Chart(usageCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Usage',
+                        data: [],
+                        borderColor: '#f39c12',
+                        backgroundColor: 'rgba(243, 156, 18, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Usage Trend Over Time'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Cost comparison chart
+            const costCtx = document.getElementById('costChart').getContext('2d');
+            costChart = new Chart(costCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Electricity', 'Water', 'Gas', 'Heating'],
+                    datasets: [{
+                        label: 'Monthly Cost ($)',
+                        data: [87, 52, 118, 222],
+                        backgroundColor: [
+                            '#f39c12',
+                            '#3498db',
+                            '#e74c3c',
+                            '#9b59b6'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Monthly Utility Costs Comparison'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateCharts() {
+            const data = utilityData[currentUtility];
+            
+            // Update usage chart
+            const labels = data.readings.map(r => new Date(r.date).toLocaleDateString());
+            const values = data.readings.map(r => r.value);
+            
+            usageChart.data.labels = labels;
+            usageChart.data.datasets[0].data = values;
+            usageChart.data.datasets[0].label = `${currentUtility.charAt(0).toUpperCase() + currentUtility.slice(1)} (${data.unit})`;
+            usageChart.update();
+            
+            // Update cost chart with current data
+            const costs = Object.keys(utilityData).map(utility => {
+                const utilData = utilityData[utility];
+                const monthlyUsage = utilData.readings.length > 1 ? 
+                    utilData.readings[utilData.readings.length - 1].value - utilData.readings[0].value : 0;
+                return monthlyUsage * utilData.rate;
+            });
+            
+            costChart.data.datasets[0].data = costs;
+            costChart.update();
+        }
+
+        function updateCosts() {
+            const newRate = parseFloat(document.getElementById('ratePerUnit').value);
+            if (newRate > 0) {
+                utilityData[currentUtility].rate = newRate;
+                updateDisplay();
+            }
+        }
+
+        function checkBudget() {
+            const newBudget = parseFloat(document.getElementById('budgetLimit').value);
+            if (newBudget > 0) {
+                utilityData[currentUtility].budget = newBudget;
+            }
+            
+            const data = utilityData[currentUtility];
+            const monthlyUsage = calculateMonthlyUsage();
+            const monthlyCost = monthlyUsage * data.rate;
+            const alertContainer = document.getElementById('alertContainer');
+            
+            alertContainer.innerHTML = '';
+            
+            if (monthlyCost > data.budget * 0.9) {
+                const alertDiv = document.createElement('div');
+                if (monthlyCost > data.budget) {
+                    alertDiv.className = 'alert alert-danger';
+                    alertDiv.innerHTML = `🚨 Over Budget!<br>$${(monthlyCost - data.budget).toFixed(2)} over your monthly limit`;
+                } else {
+                    alertDiv.className = 'alert alert-warning';
+                    alertDiv.innerHTML = `⚠️ Approaching Budget<br>${((monthlyCost / data.budget) * 100).toFixed(0)}% of monthly limit used`;
+                }
+                alertContainer.appendChild(alertDiv);
+            }
+        }
+
+        function clearData() {
+            if (confirm(`Are you sure you want to clear all ${currentUtility} data? This cannot be undone.`)) {
+                utilityData[currentUtility].readings = [];
+                updateDisplay();
+                showNotification('All data cleared for ' + currentUtility, 'success');
+            }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#27ae60' : '#e74c3c'};
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                z-index: 1000;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                max-width: 300px;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 3000);
+        }
+
+        // Initialize the utility monitor
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();
+            updateDisplay();
+            updateSettings();
+        });
+    </script>
+</body>
+</html>

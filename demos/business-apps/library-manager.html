@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System - Interactive Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #8e44ad, #9b59b6);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+        
+        .add-book-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            height: fit-content;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            background: #8e44ad;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .btn:hover {
+            background: #7d3c98;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+        }
+        
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+        
+        .library-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+        
+        .search-bar {
+            margin-bottom: 1.5rem;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .library-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #8e44ad;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #8e44ad;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .books-grid {
+            display: grid;
+            gap: 1rem;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .book-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #8e44ad;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .book-info h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .book-details {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .book-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            width: auto;
+            margin: 0;
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 1rem;
+        }
+        
+        .status-available {
+            background: #d5f4e6;
+            color: #27ae60;
+        }
+        
+        .status-borrowed {
+            background: #fdeaea;
+            color: #e74c3c;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .book-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .book-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-btn">← Back to Demos</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1>📚 Library Management System</h1>
+            <p>Comprehensive book inventory and management system</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="add-book-section">
+                <h3>📖 Add New Book</h3>
+                <div class="form-group">
+                    <label for="bookTitle">Book Title</label>
+                    <input type="text" id="bookTitle" placeholder="Enter book title">
+                </div>
+                <div class="form-group">
+                    <label for="bookAuthor">Author</label>
+                    <input type="text" id="bookAuthor" placeholder="Enter author name">
+                </div>
+                <div class="form-group">
+                    <label for="bookYear">Publication Year</label>
+                    <input type="number" id="bookYear" placeholder="2024" min="1000" max="2024">
+                </div>
+                <div class="form-group">
+                    <label for="bookGenre">Genre</label>
+                    <select id="bookGenre">
+                        <option value="">Select Genre</option>
+                        <option value="Fiction">Fiction</option>
+                        <option value="Non-Fiction">Non-Fiction</option>
+                        <option value="Science">Science</option>
+                        <option value="Technology">Technology</option>
+                        <option value="History">History</option>
+                        <option value="Biography">Biography</option>
+                        <option value="Mystery">Mystery</option>
+                        <option value="Romance">Romance</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Educational">Educational</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bookISBN">ISBN (Optional)</label>
+                    <input type="text" id="bookISBN" placeholder="978-0-123456-78-9">
+                </div>
+                <button class="btn" onclick="addBook()">Add Book to Library</button>
+                
+                <hr style="margin: 2rem 0;">
+                
+                <button class="btn btn-danger" onclick="clearLibrary()">Clear All Books</button>
+            </div>
+            
+            <div class="library-section">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="🔍 Search books by title, author, or genre..." oninput="searchBooks()">
+                </div>
+                
+                <div class="library-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalBooks">0</div>
+                        <div class="stat-label">Total Books</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="availableBooks">0</div>
+                        <div class="stat-label">Available</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="borrowedBooks">0</div>
+                        <div class="stat-label">Borrowed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="uniqueAuthors">0</div>
+                        <div class="stat-label">Authors</div>
+                    </div>
+                </div>
+                
+                <h3>📚 Library Collection</h3>
+                <div class="books-grid" id="booksContainer">
+                    <div class="empty-state">
+                        <div style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.5;">📚</div>
+                        <p>No books in the library yet.</p>
+                        <p>Add some books to get started!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let books = [
+            {
+                id: 1,
+                title: "Python Programming for Beginners",
+                author: "John Smith",
+                year: 2023,
+                genre: "Technology",
+                isbn: "978-0-123456-78-9",
+                status: "available"
+            },
+            {
+                id: 2,
+                title: "Data Science Handbook",
+                author: "Jane Doe",
+                year: 2022,
+                genre: "Science",
+                isbn: "978-0-987654-32-1",
+                status: "borrowed"
+            },
+            {
+                id: 3,
+                title: "The Art of Machine Learning",
+                author: "Alex Johnson",
+                year: 2024,
+                genre: "Technology",
+                isbn: "978-0-456789-12-3",
+                status: "available"
+            }
+        ];
+        
+        let nextId = 4;
+
+        function addBook() {
+            const title = document.getElementById('bookTitle').value.trim();
+            const author = document.getElementById('bookAuthor').value.trim();
+            const year = parseInt(document.getElementById('bookYear').value);
+            const genre = document.getElementById('bookGenre').value;
+            const isbn = document.getElementById('bookISBN').value.trim();
+
+            if (!title || !author || !year || !genre) {
+                alert('Please fill in all required fields (Title, Author, Year, Genre)');
+                return;
+            }
+
+            if (year < 1000 || year > new Date().getFullYear()) {
+                alert('Please enter a valid publication year');
+                return;
+            }
+
+            const newBook = {
+                id: nextId++,
+                title: title,
+                author: author,
+                year: year,
+                genre: genre,
+                isbn: isbn || 'N/A',
+                status: 'available'
+            };
+
+            books.push(newBook);
+            clearForm();
+            displayBooks();
+            updateStats();
+            
+            showNotification(`"${title}" has been added to the library!`, 'success');
+        }
+
+        function clearForm() {
+            document.getElementById('bookTitle').value = '';
+            document.getElementById('bookAuthor').value = '';
+            document.getElementById('bookYear').value = '';
+            document.getElementById('bookGenre').value = '';
+            document.getElementById('bookISBN').value = '';
+        }
+
+        function displayBooks(booksToShow = books) {
+            const container = document.getElementById('booksContainer');
+            
+            if (booksToShow.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.5;">📚</div>
+                        <p>No books found.</p>
+                        <p>Try adjusting your search or add some books!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+            booksToShow.forEach(book => {
+                const bookCard = document.createElement('div');
+                bookCard.className = 'book-card';
+                bookCard.innerHTML = `
+                    <div class="book-info">
+                        <h4>${book.title}</h4>
+                        <div class="book-details">
+                            <strong>Author:</strong> ${book.author}<br>
+                            <strong>Year:</strong> ${book.year} | <strong>Genre:</strong> ${book.genre}<br>
+                            <strong>ISBN:</strong> ${book.isbn}
+                        </div>
+                    </div>
+                    <div class="book-actions">
+                        <span class="status-badge ${book.status === 'available' ? 'status-available' : 'status-borrowed'}">
+                            ${book.status === 'available' ? '✅ Available' : '📖 Borrowed'}
+                        </span>
+                        <button class="btn btn-small" onclick="toggleBookStatus(${book.id})">
+                            ${book.status === 'available' ? 'Borrow' : 'Return'}
+                        </button>
+                        <button class="btn btn-small btn-danger" onclick="removeBook(${book.id})">Remove</button>
+                    </div>
+                `;
+                container.appendChild(bookCard);
+            });
+        }
+
+        function toggleBookStatus(bookId) {
+            const book = books.find(b => b.id === bookId);
+            if (book) {
+                book.status = book.status === 'available' ? 'borrowed' : 'available';
+                displayBooks();
+                updateStats();
+                
+                const action = book.status === 'borrowed' ? 'borrowed' : 'returned';
+                showNotification(`"${book.title}" has been ${action}!`, 'success');
+            }
+        }
+
+        function removeBook(bookId) {
+            const book = books.find(b => b.id === bookId);
+            if (book && confirm(`Are you sure you want to remove "${book.title}" from the library?`)) {
+                books = books.filter(b => b.id !== bookId);
+                displayBooks();
+                updateStats();
+                showNotification(`"${book.title}" has been removed from the library.`, 'success');
+            }
+        }
+
+        function searchBooks() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredBooks = books.filter(book => 
+                book.title.toLowerCase().includes(searchTerm) ||
+                book.author.toLowerCase().includes(searchTerm) ||
+                book.genre.toLowerCase().includes(searchTerm)
+            );
+            displayBooks(filteredBooks);
+        }
+
+        function updateStats() {
+            const totalBooks = books.length;
+            const availableBooks = books.filter(b => b.status === 'available').length;
+            const borrowedBooks = books.filter(b => b.status === 'borrowed').length;
+            const uniqueAuthors = new Set(books.map(b => b.author)).size;
+
+            document.getElementById('totalBooks').textContent = totalBooks;
+            document.getElementById('availableBooks').textContent = availableBooks;
+            document.getElementById('borrowedBooks').textContent = borrowedBooks;
+            document.getElementById('uniqueAuthors').textContent = uniqueAuthors;
+        }
+
+        function clearLibrary() {
+            if (confirm('Are you sure you want to remove all books from the library? This action cannot be undone.')) {
+                books = [];
+                displayBooks();
+                updateStats();
+                showNotification('Library has been cleared.', 'success');
+            }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#27ae60' : '#e74c3c'};
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                z-index: 1000;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                max-width: 300px;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 3000);
+        }
+
+        // Initialize the library
+        document.addEventListener('DOMContentLoaded', function() {
+            displayBooks();
+            updateStats();
+        });
+    </script>
+</body>
+</html>

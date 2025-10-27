@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Quiz - Python Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .quiz-container {
+            padding: 2rem;
+        }
+        
+        .progress-bar {
+            background: #e9ecef;
+            height: 10px;
+            border-radius: 5px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .question-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border-left: 5px solid #9b59b6;
+        }
+        
+        .question-number {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+        
+        .options {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .option {
+            background: white;
+            border: 2px solid #e9ecef;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        
+        .option:hover {
+            border-color: #9b59b6;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .option.selected {
+            border-color: #9b59b6;
+            background: #f8f4ff;
+        }
+        
+        .option.correct {
+            border-color: #27ae60;
+            background: #d5f4e6;
+        }
+        
+        .option.incorrect {
+            border-color: #e74c3c;
+            background: #fdeaea;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            background: #9b59b6;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: #8e44ad;
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .score-display {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .results {
+            text-align: center;
+            padding: 2rem;
+            display: none;
+        }
+        
+        .final-score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #9b59b6;
+            margin-bottom: 1rem;
+        }
+        
+        .score-message {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        
+        .category-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .category-stat {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #9b59b6;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .category-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-btn">← Back to Demos</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🧠 Interactive Quiz</h1>
+            <p>Test your knowledge with this Python-powered quiz application</p>
+        </div>
+        
+        <div class="quiz-container" id="quizContainer">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+            <div class="question-card" id="questionCard">
+                <div class="question-number" id="questionNumber">Question 1 of 10</div>
+                <div class="question-text" id="questionText">Loading question...</div>
+                <div class="options" id="optionsContainer">
+                    <!-- Options will be populated here -->
+                </div>
+            </div>
+            
+            <div class="controls">
+                <div class="score-display">
+                    Score: <span id="currentScore">0</span> / <span id="totalQuestions">10</span>
+                </div>
+                <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Next Question</button>
+            </div>
+        </div>
+        
+        <div class="results" id="resultsContainer">
+            <h2>🎉 Quiz Complete!</h2>
+            <div class="final-score" id="finalScore">0/10</div>
+            <div class="score-message" id="scoreMessage">Great job!</div>
+            
+            <div class="category-stats" id="categoryStats">
+                <!-- Category statistics will be populated here -->
+            </div>
+            
+            <button class="btn" onclick="restartQuiz()">Take Quiz Again</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What is the correct way to create a function in Python?",
+                options: ["function myFunc():", "def myFunc():", "create myFunc():", "func myFunc():"],
+                correct: 1,
+                category: "Python Basics"
+            },
+            {
+                question: "Which data type is used to store multiple items in a single variable?",
+                options: ["String", "Integer", "List", "Boolean"],
+                correct: 2,
+                category: "Data Types"
+            },
+            {
+                question: "What does the 'len()' function do in Python?",
+                options: ["Creates a list", "Returns the length of an object", "Converts to lowercase", "Prints to console"],
+                correct: 1,
+                category: "Built-in Functions"
+            },
+            {
+                question: "Which symbol is used for comments in Python?",
+                options: ["//", "/*", "#", "<!--"],
+                correct: 2,
+                category: "Python Basics"
+            },
+            {
+                question: "What is the output of: print(2 ** 3)?",
+                options: ["6", "8", "9", "23"],
+                correct: 1,
+                category: "Operators"
+            },
+            {
+                question: "Which method is used to add an item to the end of a list?",
+                options: ["add()", "append()", "insert()", "push()"],
+                correct: 1,
+                category: "Lists"
+            },
+            {
+                question: "What keyword is used to create a class in Python?",
+                options: ["class", "Class", "define", "object"],
+                correct: 0,
+                category: "OOP"
+            },
+            {
+                question: "Which library is commonly used for data analysis in Python?",
+                options: ["pygame", "pandas", "tkinter", "requests"],
+                correct: 1,
+                category: "Libraries"
+            },
+            {
+                question: "What does 'pip' stand for in Python?",
+                options: ["Python Install Package", "Pip Installs Packages", "Python Integrated Platform", "Package Install Python"],
+                correct: 1,
+                category: "Tools"
+            },
+            {
+                question: "Which loop is used to iterate over a sequence in Python?",
+                options: ["while", "for", "do-while", "repeat"],
+                correct: 1,
+                category: "Control Flow"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedAnswer = null;
+        let categoryStats = {};
+
+        function initializeQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            selectedAnswer = null;
+            categoryStats = {};
+            
+            // Initialize category stats
+            questions.forEach(q => {
+                if (!categoryStats[q.category]) {
+                    categoryStats[q.category] = { correct: 0, total: 0 };
+                }
+                categoryStats[q.category].total++;
+            });
+            
+            showQuestion();
+            updateProgress();
+            updateScore();
+        }
+
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            
+            document.getElementById('questionNumber').textContent = 
+                `Question ${currentQuestion + 1} of ${questions.length}`;
+            document.getElementById('questionText').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                optionElement.onclick = () => selectOption(index);
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            selectedAnswer = null;
+            document.getElementById('nextBtn').disabled = true;
+        }
+
+        function selectOption(index) {
+            // Remove previous selections
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Select current option
+            document.querySelectorAll('.option')[index].classList.add('selected');
+            selectedAnswer = index;
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function nextQuestion() {
+            if (selectedAnswer === null) return;
+            
+            const question = questions[currentQuestion];
+            const isCorrect = selectedAnswer === question.correct;
+            
+            // Show correct/incorrect styling
+            document.querySelectorAll('.option').forEach((opt, index) => {
+                if (index === question.correct) {
+                    opt.classList.add('correct');
+                } else if (index === selectedAnswer && !isCorrect) {
+                    opt.classList.add('incorrect');
+                }
+                opt.style.pointerEvents = 'none';
+            });
+            
+            // Update score and stats
+            if (isCorrect) {
+                score++;
+                categoryStats[question.category].correct++;
+            }
+            
+            // Wait a moment to show the result, then move to next question
+            setTimeout(() => {
+                currentQuestion++;
+                
+                if (currentQuestion < questions.length) {
+                    showQuestion();
+                    updateProgress();
+                    updateScore();
+                } else {
+                    showResults();
+                }
+            }, 1500);
+        }
+
+        function updateProgress() {
+            const progress = (currentQuestion / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function updateScore() {
+            document.getElementById('currentScore').textContent = score;
+            document.getElementById('totalQuestions').textContent = questions.length;
+        }
+
+        function showResults() {
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'block';
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${questions.length}`;
+            
+            let message = '';
+            if (percentage >= 90) {
+                message = '🏆 Excellent! You\'re a Python expert!';
+            } else if (percentage >= 70) {
+                message = '🎉 Great job! You have solid Python knowledge!';
+            } else if (percentage >= 50) {
+                message = '👍 Good work! Keep learning and practicing!';
+            } else {
+                message = '📚 Keep studying! You\'ll improve with practice!';
+            }
+            
+            document.getElementById('scoreMessage').textContent = message;
+            
+            // Show category statistics
+            const categoryStatsContainer = document.getElementById('categoryStats');
+            categoryStatsContainer.innerHTML = '';
+            
+            Object.entries(categoryStats).forEach(([category, stats]) => {
+                const statElement = document.createElement('div');
+                statElement.className = 'category-stat';
+                const categoryPercentage = Math.round((stats.correct / stats.total) * 100);
+                statElement.innerHTML = `
+                    <strong>${category}</strong><br>
+                    ${stats.correct}/${stats.total} (${categoryPercentage}%)
+                `;
+                categoryStatsContainer.appendChild(statElement);
+            });
+        }
+
+        function restartQuiz() {
+            document.getElementById('quizContainer').style.display = 'block';
+            document.getElementById('resultsContainer').style.display = 'none';
+            initializeQuiz();
+        }
+
+        // Initialize the quiz when page loads
+        document.addEventListener('DOMContentLoaded', initializeQuiz);
+    </script>
+</body>
+</html>
