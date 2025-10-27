@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Dashboard - Interactive Demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .dashboard {
+            padding: 2rem;
+        }
+        
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .metric-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 5px solid #3498db;
+            text-align: center;
+        }
+        
+        .metric-card.revenue { border-left-color: #27ae60; }
+        .metric-card.orders { border-left-color: #e74c3c; }
+        .metric-card.customers { border-left-color: #f39c12; }
+        .metric-card.growth { border-left-color: #9b59b6; }
+        
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-label {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        .charts {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-container {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+        
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+        
+        .data-table {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .table th,
+        .table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .table th {
+            background: #e9ecef;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .table tr:hover {
+            background: #f1f3f4;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .control-group label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .control-group select,
+        .control-group input {
+            padding: 0.5rem;
+            border: 2px solid #e9ecef;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .charts {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-btn">← Back to Demos</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1>📈 Sales Analytics Dashboard</h1>
+            <p>Interactive business intelligence and sales data visualization</p>
+        </div>
+        
+        <div class="dashboard">
+            <div class="controls">
+                <div class="control-group">
+                    <label for="timeRange">Time Range</label>
+                    <select id="timeRange" onchange="updateDashboard()">
+                        <option value="7">Last 7 Days</option>
+                        <option value="30" selected>Last 30 Days</option>
+                        <option value="90">Last 90 Days</option>
+                        <option value="365">Last Year</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="category">Product Category</label>
+                    <select id="category" onchange="updateDashboard()">
+                        <option value="all">All Categories</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="clothing">Clothing</option>
+                        <option value="books">Books</option>
+                        <option value="home">Home & Garden</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>&nbsp;</label>
+                    <button class="btn" onclick="generateReport()">Generate Report</button>
+                </div>
+            </div>
+            
+            <div class="metrics">
+                <div class="metric-card revenue">
+                    <div class="metric-value" id="totalRevenue">$45,230</div>
+                    <div class="metric-label">Total Revenue</div>
+                </div>
+                <div class="metric-card orders">
+                    <div class="metric-value" id="totalOrders">1,247</div>
+                    <div class="metric-label">Total Orders</div>
+                </div>
+                <div class="metric-card customers">
+                    <div class="metric-value" id="totalCustomers">892</div>
+                    <div class="metric-label">Unique Customers</div>
+                </div>
+                <div class="metric-card growth">
+                    <div class="metric-value" id="growthRate">+12.5%</div>
+                    <div class="metric-label">Growth Rate</div>
+                </div>
+            </div>
+            
+            <div class="charts">
+                <div class="chart-container">
+                    <div class="chart-title">Sales Trend Over Time</div>
+                    <canvas id="salesChart" width="400" height="200"></canvas>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">Sales by Category</div>
+                    <canvas id="categoryChart" width="300" height="300"></canvas>
+                </div>
+            </div>
+            
+            <div class="data-table">
+                <div class="chart-title">Top Performing Products</div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Sales</th>
+                            <th>Revenue</th>
+                            <th>Growth</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTable">
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data
+        const salesData = {
+            7: { revenue: 12450, orders: 287, customers: 198, growth: 8.2 },
+            30: { revenue: 45230, orders: 1247, customers: 892, growth: 12.5 },
+            90: { revenue: 128900, orders: 3456, customers: 2341, growth: 15.8 },
+            365: { revenue: 567800, orders: 15234, customers: 8976, growth: 22.3 }
+        };
+
+        const productData = [
+            { name: 'Wireless Headphones', category: 'Electronics', sales: 234, revenue: 23400, growth: 15.2 },
+            { name: 'Smart Watch', category: 'Electronics', sales: 189, revenue: 37800, growth: 22.1 },
+            { name: 'Running Shoes', category: 'Clothing', sales: 156, revenue: 15600, growth: 8.7 },
+            { name: 'Programming Book', category: 'Books', sales: 98, revenue: 2940, growth: 5.3 },
+            { name: 'Garden Tools', category: 'Home', sales: 67, revenue: 6700, growth: 12.8 }
+        ];
+
+        let salesChart, categoryChart;
+
+        function initCharts() {
+            // Sales trend chart
+            const salesCtx = document.getElementById('salesChart').getContext('2d');
+            salesChart = new Chart(salesCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    datasets: [{
+                        label: 'Sales ($)',
+                        data: [8500, 12300, 15600, 18800],
+                        borderColor: '#3498db',
+                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Category pie chart
+            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+            categoryChart = new Chart(categoryCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Electronics', 'Clothing', 'Books', 'Home & Garden'],
+                    datasets: [{
+                        data: [45, 25, 15, 15],
+                        backgroundColor: [
+                            '#3498db',
+                            '#e74c3c',
+                            '#f39c12',
+                            '#27ae60'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateDashboard() {
+            const timeRange = document.getElementById('timeRange').value;
+            const category = document.getElementById('category').value;
+            
+            // Update metrics
+            const data = salesData[timeRange];
+            document.getElementById('totalRevenue').textContent = '$' + data.revenue.toLocaleString();
+            document.getElementById('totalOrders').textContent = data.orders.toLocaleString();
+            document.getElementById('totalCustomers').textContent = data.customers.toLocaleString();
+            document.getElementById('growthRate').textContent = '+' + data.growth + '%';
+            
+            // Update product table
+            updateProductTable(category);
+            
+            // Update charts with animation
+            updateCharts(timeRange);
+        }
+
+        function updateProductTable(category) {
+            const tableBody = document.getElementById('productTable');
+            tableBody.innerHTML = '';
+            
+            let filteredProducts = productData;
+            if (category !== 'all') {
+                filteredProducts = productData.filter(p => p.category.toLowerCase() === category);
+            }
+            
+            filteredProducts.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${product.name}</td>
+                    <td>${product.category}</td>
+                    <td>${product.sales}</td>
+                    <td>$${product.revenue.toLocaleString()}</td>
+                    <td style="color: ${product.growth > 10 ? '#27ae60' : '#f39c12'}">
+                        +${product.growth}%
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function updateCharts(timeRange) {
+            // Update sales chart data based on time range
+            let newData, newLabels;
+            
+            switch(timeRange) {
+                case '7':
+                    newLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                    newData = [1200, 1800, 1500, 2100, 1900, 2300, 1600];
+                    break;
+                case '30':
+                    newLabels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+                    newData = [8500, 12300, 15600, 18800];
+                    break;
+                case '90':
+                    newLabels = ['Month 1', 'Month 2', 'Month 3'];
+                    newData = [35000, 42000, 51900];
+                    break;
+                case '365':
+                    newLabels = ['Q1', 'Q2', 'Q3', 'Q4'];
+                    newData = [120000, 145000, 156000, 146800];
+                    break;
+            }
+            
+            salesChart.data.labels = newLabels;
+            salesChart.data.datasets[0].data = newData;
+            salesChart.update();
+        }
+
+        function generateReport() {
+            const timeRange = document.getElementById('timeRange').value;
+            const category = document.getElementById('category').value;
+            
+            // Simulate report generation
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: #27ae60;
+                color: white;
+                padding: 2rem;
+                border-radius: 10px;
+                z-index: 1000;
+                text-align: center;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            `;
+            notification.innerHTML = `
+                <h3>📊 Report Generated!</h3>
+                <p>Sales report for ${timeRange} days${category !== 'all' ? ' (' + category + ')' : ''}</p>
+                <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.9;">
+                    In a real application, this would download a PDF or Excel file.
+                </p>
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 3000);
+        }
+
+        // Initialize the dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();
+            updateProductTable('all');
+        });
+    </script>
+</body>
+</html>
