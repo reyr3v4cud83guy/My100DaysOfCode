@@ -11,20 +11,52 @@
             box-sizing: border-box;
         }
         
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #10b981 100%);
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: rgba(255, 255, 255, 0.9);
+            --shadow: rgba(0, 0, 0, 0.1);
+            --display-bg: #f8fafc;
+            --display-border: #e2e8f0;
+            --btn-bg: #f1f5f9;
+            --btn-operator: #0ea5e9;
+            --btn-equals: #10b981;
+            --btn-clear: #ef4444;
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f766e 100%);
+            --card-bg: #1e293b;
+            --text-color: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: rgba(30, 41, 59, 0.9);
+            --shadow: rgba(0, 0, 0, 0.4);
+            --display-bg: #334155;
+            --display-border: #475569;
+            --btn-bg: #475569;
+            --btn-operator: #06b6d4;
+            --btn-equals: #10b981;
+            --btn-clear: #f87171;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--bg-gradient);
             min-height: 100vh;
             padding: 20px;
+            transition: all 0.3s ease;
         }
         
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background: white;
+            background: var(--card-bg);
             border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px var(--shadow);
             overflow: hidden;
+            transition: all 0.3s ease;
         }
         
         .header {

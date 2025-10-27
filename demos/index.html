@@ -12,11 +12,31 @@
             box-sizing: border-box;
         }
         
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #10b981 100%);
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: rgba(255, 255, 255, 0.9);
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f766e 100%);
+            --card-bg: #1e293b;
+            --text-color: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: rgba(30, 41, 59, 0.9);
+            --shadow: rgba(0, 0, 0, 0.4);
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--bg-gradient);
             min-height: 100vh;
             padding: 20px;
+            color: var(--text-color);
+            transition: all 0.3s ease;
         }
         
         .container {
@@ -28,6 +48,27 @@
             text-align: center;
             color: white;
             margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .theme-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
         }
         
         .header h1 {
@@ -48,11 +89,11 @@
         }
         
         .category-card {
-            background: white;
+            background: var(--card-bg);
             border-radius: 15px;
             padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 10px 30px var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s ease;
             text-align: center;
         }
         
@@ -72,11 +113,11 @@
         .category-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: #333;
+            color: var(--text-color);
         }
         
         .category-card p {
-            color: #666;
+            color: var(--text-secondary);
             margin-bottom: 1.5rem;
         }
         
@@ -114,15 +155,16 @@
             position: fixed;
             top: 20px;
             left: 20px;
-            background: rgba(255,255,255,0.9);
+            background: var(--border-color);
             border: none;
             padding: 10px 20px;
             border-radius: 25px;
             cursor: pointer;
             text-decoration: none;
-            color: #333;
+            color: var(--text-color);
             font-weight: bold;
             backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
         
         .back-btn:hover {
@@ -195,6 +237,9 @@
     
     <div class="container">
         <div class="header">
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="fas fa-moon" id="themeIcon"></i> <span id="themeText">Dark Mode</span>
+            </button>
             <h1><i class="fas fa-play-circle"></i> Interactive Project Demos</h1>
             <p>Experience my Python projects directly in your browser</p>
         </div>
@@ -250,5 +295,44 @@
             <p><em>Transforming Python projects into interactive web experiences</em></p>
         </div>
     </div>
+    
+    <script>
+        // Theme toggle functionality
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            const themeIcon = document.getElementById('themeIcon');
+            const themeText = document.getElementById('themeText');
+            
+            if (newTheme === 'dark') {
+                themeIcon.className = 'fas fa-sun';
+                themeText.textContent = 'Light Mode';
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                themeText.textContent = 'Dark Mode';
+            }
+        }
+
+        // Load saved theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            
+            const themeIcon = document.getElementById('themeIcon');
+            const themeText = document.getElementById('themeText');
+            
+            if (savedTheme === 'dark') {
+                themeIcon.className = 'fas fa-sun';
+                themeText.textContent = 'Light Mode';
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                themeText.textContent = 'Dark Mode';
+            }
+        });
+    </script>
 </body>
 </html>

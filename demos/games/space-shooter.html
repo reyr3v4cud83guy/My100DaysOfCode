@@ -11,18 +11,34 @@
             box-sizing: border-box;
         }
         
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #10b981 100%);
+            --game-bg: #000;
+            --text-color: #ffffff;
+            --accent-color: #06b6d4;
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f766e 100%);
+            --game-bg: #0a0a0a;
+            --text-color: #f1f5f9;
+            --accent-color: #10b981;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #000;
-            color: white;
+            background: var(--game-bg);
+            color: var(--text-color);
             overflow: hidden;
+            transition: all 0.3s ease;
         }
         
         .game-container {
             position: relative;
             width: 100vw;
             height: 100vh;
-            background: linear-gradient(180deg, #000428 0%, #004e92 100%);
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            transition: all 0.3s ease;
         }
         
         #gameCanvas {
