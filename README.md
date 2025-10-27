@@ -184,8 +184,8 @@ Feel free to fork this repository and submit pull requests. All contributions ar
 
 **Abdullahi Osman**
 
-- Email: Osman6176@gmail.com
-- GitHub: [Your GitHub Profile]
+- Email: abdullahiosman6543@gmail.com
+- GitHub: [https://github.com/reyr3v4cud83guy]
 
 ---
 
