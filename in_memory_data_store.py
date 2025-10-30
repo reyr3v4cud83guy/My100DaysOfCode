@@ -1,11 +1,11 @@
-from flask import Flask, request, jsconfig
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
 # Sample in-memory data store
 users = {
-    "1": {"name": "John Doe", "balance": 1000.0},
-    "2": {"name": "Jane Doe", "balance": 500.0}
+    "1": {"name": "Osman Abdi", "balance": 1000.0},
+    "2": {"name": "Warsame Fraha", "balance": 500.0}
 }
 
 @app.route("/transfer", methods=["POST"])
@@ -16,24 +16,24 @@ def transfer():
     amount = data["amount"]
 
     if sender_id not in users or receiver_id not in users:
-        return jsconfig({"error": "Invalid user ID"}), 400
+        return jsonify({"error": "Invalid user ID"}), 400
 
     sender_balance = users[sender_id]["balance"]
     if amount > sender_balance:
-        return jsconfig({"error": "Insufficient balance"}), 400
+        return jsonify({"error": "Insufficient balance"}), 400
 
     users[sender_id]["balance"] -= amount
     users[receiver_id]["balance"] += amount
 
-    return jsconfig({"message": "Transfer successful"}), 200
+    return jsonify({"message": "Transfer successful"}), 200
 
 @app.route("/balance", methods=["GET"])
 def balance():
     user_id = request.args.get("user_id")
     if user_id not in users:
-        return jsconfig({"error": "Invalid user ID"}), 400
+        return jsonify({"error": "Invalid user ID"}), 400
 
-    return jsconfig({"balance": users[user_id]["balance"]}), 200
+    return jsonify({"balance": users[user_id]["balance"]}), 200
 
 if __name__ == "__main__":
     app.run(debug=True)

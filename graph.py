@@ -93,9 +93,9 @@ def demonstrate_data_analysis():
     # Pandas Module
     print("\n🐼 Pandas Module:")
     data = {
-        'Name': ['Alice', 'Bob', 'Charlie', 'Diana'],
+        'Name': ['Osman', 'Abdi', 'Sarah', 'Samira'],
         'Age': [25, 30, 35, 28],
-        'City': ['New York', 'London', 'Tokyo', 'Paris'],
+        'City': ['New York', 'London', 'Mogadishu', 'Nairobi'],
         'Salary': [50000, 60000, 70000, 55000]
     }
     df = pd.DataFrame(data)

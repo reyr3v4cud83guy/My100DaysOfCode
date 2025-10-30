@@ -33,7 +33,7 @@
 - ✂️ **Rock Paper Scissors** - Classic game vs AI
 - 🧠 **Quiz App** - Knowledge testing platform
 
-### � **Businaess Applications**
+### 💼 **Business Applications**
 
 - 🏦 **Banking System** - Complete financial management
 - 💰 **Expense Tracker** - Personal finance tool
