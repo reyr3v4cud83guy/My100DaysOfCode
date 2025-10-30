@@ -11,8 +11,13 @@
     "git.ignoreLimitWarning": true,
     "cSpell.words": [
         "docstrings",
+        "figsize",
         "Pygame",
         "Segoe",
-        "Tahoma"
+        "Tahoma",
+        "xaxis",
+        "xlabel",
+        "yaxis",
+        "ylabel"
     ]
 }
