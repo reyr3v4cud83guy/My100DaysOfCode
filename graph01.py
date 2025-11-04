@@ -161,7 +161,7 @@ def demonstrate_pandas_module():
 
     data = {
 
-        'Name': ['Alice', 'Bob', 'Charlie', 'Diana', 'Eve'],
+        'Name': ['Abdi', 'Osman', 'Aisha', 'Warsame', 'Samira'],
 
         'Age': [25, 30, 35, 28, 32],
 
