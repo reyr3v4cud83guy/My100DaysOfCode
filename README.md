@@ -9,7 +9,7 @@
 
 **🚀 A comprehensive collection of Python projects showcasing real-world applications**
 
-### 🌐 [**View Live Portfolio Website**]([https://my100-days-of-code.vercel.app/]) 🌐
+### 🌐 [**View Live Portfolio Website**](https://my100-days-of-code.vercel.app/) 🌐
 
 </div>
 
